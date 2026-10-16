@@ -146,12 +146,85 @@
   const getRecords=()=>{try{return JSON.parse(localStorage.getItem(KEY)||'[]')}catch{return []}};
   const saveRecords=x=>localStorage.setItem(KEY,JSON.stringify(x));
   function makeRef(){return 'AZ-'+new Date().getFullYear()+'-'+Math.random().toString(36).slice(2,8).toUpperCase()}
-  document.querySelectorAll('form[data-kind]').forEach(form=>form.addEventListener('submit',e=>{
-    e.preventDefault();const data=Object.fromEntries(new FormData(form).entries());
-    const record={ref:makeRef(),kind:form.dataset.kind,category:data.category||'',place:data.place||'',details:data.details||'',contact:data.contact||'',status:'تم التسجيل محلياً (تجريبي)',createdAt:new Date().toISOString()};
-    const all=getRecords();all.unshift(record);saveRecords(all);
-    const out=form.querySelector('.success');out.style.display='block';out.textContent='تسجل الطلب التجريبي. الرقم المرجعي: '+record.ref+' — احتافظ به. تنبيه: ما توصلاتش به الجماعة.';
-    form.reset();
+ 
+  const SUPABASE_URL = 'https://vliadiyanlhccupgeuam.supabase.co/rest/v1/';
+  const SUPABASE_KEY = 'sb_publishable_0OCDAbzSvoQBr8OWij1dqA_z_MCOd7l';
+
+  document.querySelectorAll('form[data-kind]').forEach(form => {
+    form.addEventListener('submit', async e => {
+      e.preventDefault();
+
+      const data = Object.fromEntries(new FormData(form).entries());
+      const out = form.querySelector('.success');
+      const button = form.querySelector('[type="submit"]');
+
+      const types = {
+        'شكاية': 'complaint',
+        'اقتراح': 'suggestion',
+        'طلب إداري': 'request'
+      };
+
+      const type = types[form.dataset.kind];
+
+      if (!type) {
+        out.style.display = 'block';
+        out.textContent = 'نوع الطلب غير معروف. المرجو مراجعة إعدادات الاستمارة.';
+        return;
+      }
+
+      if (button) button.disabled = true;
+      out.style.display = 'block';
+      out.textContent = 'جاري إرسال الطلب...';
+
+      try {
+        const response = await fetch(
+          `${SUPABASE_URL}/rest/v1/rpc/submit_citizen_request`,
+          {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'apikey': SUPABASE_KEY,
+              'Authorization': `Bearer ${SUPABASE_KEY}`
+            },
+            body: JSON.stringify({
+              p_type: type,
+              p_category: data.category || '',
+              p_details: data.details || '',
+              p_douar: data.place || null,
+              p_contact: data.contact || null
+            })
+          }
+        );
+
+        const result = await response.json();
+
+        if (!response.ok) {
+          throw new Error('تعذر إرسال الطلب. راجع إعدادات Supabase وحاول مجدداً.');
+        }
+
+        const reference = Array.isArray(result)
+          ? result[0]?.reference_code
+          : result?.reference_code;
+
+        if (!reference) {
+          throw new Error('لم نتوصل بالرقم المرجعي. حاول مرة أخرى.');
+        }
+
+        out.textContent =
+          'تم إرسال الطلب بنجاح. الرقم المرجعي: ' + reference +
+          ' — احتافظ به للمتابعة.';
+
+        form.reset();
+
+      } catch (error) {
+        out.textContent = error.message ||
+          'وقع خطأ في الاتصال. حاول مرة أخرى.';
+      } finally {
+        if (button) button.disabled = false;
+      }
+    });
+  });
+
   }));
   function renderRecords(){const el=document.getElementById('records'),all=getRecords();el.replaceChildren();if(!all.length){el.textContent='مازال ما تسجّل حتى ملف فهاد المتصفح.';return}
     all.forEach(r=>{const div=document.createElement('div');div.className='item';const title=document.createElement('strong');title.textContent=r.kind+' — '+r.category;const meta=document.createElement('small');meta.textContent='المرجع: '+r.ref+' | '+new Date(r.createdAt).toLocaleString('ar-MA')+' | '+r.status;const body=document.createElement('p');body.textContent=r.details;div.append(title,document.createElement('br'),meta,body);el.append(div)})
