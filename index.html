@@ -38,7 +38,7 @@
   </div>
 </header>
 <div class="wrap">
-  <div class="notice"><strong>نسخة تجريبية:</strong> المعلومات والطلبات المرسلة هنا كتبقى محفوظة فهاد المتصفح فقط. الموقع مازال ما مربوطش بخادم الجماعة أو قاعدة بيانات مشتركة، لذلك ما تستعملوش لإرسال معلومات شخصية أو شكايات مستعجلة.</div>
+  <div class="notice"><strong>نسخة تجريبية:</strong> خاص إعداد رابط Supabase والمفتاح العمومي واختبار الإرسال قبل الاستعمال. هاد الموقع ماشي قناة رسمية معتمدة بعد؛ ما ترسلش معلومات حساسة أو شكايات مستعجلة.</div>
   <nav class="nav" aria-label="التنقل">
     <button class="active" data-section="home">الرئيسية</button>
     <button data-section="complaint">شكاية أو تبليغ</button>
@@ -146,7 +146,7 @@
   const getRecords=()=>{try{return JSON.parse(localStorage.getItem(KEY)||'[]')}catch{return []}};
   const saveRecords=x=>localStorage.setItem(KEY,JSON.stringify(x));
   function makeRef(){return 'AZ-'+new Date().getFullYear()+'-'+Math.random().toString(36).slice(2,8).toUpperCase()}
- 
+  // إعدادات Supabase: عوّض القيمتين قبل نشر الموقع
   const SUPABASE_URL = 'https://vliadiyanlhccupgeuam.supabase.co/rest/v1/';
   const SUPABASE_KEY = 'sb_publishable_0OCDAbzSvoQBr8OWij1dqA_z_MCOd7l';
 
@@ -157,18 +157,23 @@
       const data = Object.fromEntries(new FormData(form).entries());
       const out = form.querySelector('.success');
       const button = form.querySelector('[type="submit"]');
-
       const types = {
         'شكاية': 'complaint',
         'اقتراح': 'suggestion',
         'طلب إداري': 'request'
       };
-
       const type = types[form.dataset.kind];
 
       if (!type) {
         out.style.display = 'block';
         out.textContent = 'نوع الطلب غير معروف. المرجو مراجعة إعدادات الاستمارة.';
+        return;
+      }
+
+      if (SUPABASE_URL === 'PASTE_YOUR_PROJECT_URL' ||
+          SUPABASE_KEY === 'PASTE_YOUR_PUBLISHABLE_KEY') {
+        out.style.display = 'block';
+        out.textContent = 'خاص إعداد رابط Supabase والمفتاح العمومي قبل إرسال الطلبات.';
         return;
       }
 
@@ -196,10 +201,12 @@
           }
         );
 
-        const result = await response.json();
+        let result = null;
+        try { result = await response.json(); } catch (_) {}
 
         if (!response.ok) {
-          throw new Error('تعذر إرسال الطلب. راجع إعدادات Supabase وحاول مجدداً.');
+          console.error('Supabase submission error:', result);
+          throw new Error('تعذر إرسال الطلب. تأكد من إعدادات Supabase ثم حاول مجدداً.');
         }
 
         const reference = Array.isArray(result)
@@ -207,25 +214,20 @@
           : result?.reference_code;
 
         if (!reference) {
-          throw new Error('لم نتوصل بالرقم المرجعي. حاول مرة أخرى.');
+          throw new Error('لم نتوصل بالرقم المرجعي. تحقق من إعدادات الدالة في Supabase.');
         }
 
-        out.textContent =
-          'تم إرسال الطلب بنجاح. الرقم المرجعي: ' + reference +
+        out.textContent = 'تم إرسال الطلب بنجاح. الرقم المرجعي: ' + reference +
           ' — احتافظ به للمتابعة.';
-
         form.reset();
-
       } catch (error) {
-        out.textContent = error.message ||
-          'وقع خطأ في الاتصال. حاول مرة أخرى.';
+        console.error(error);
+        out.textContent = error.message || 'وقع خطأ في الاتصال. حاول مرة أخرى.';
       } finally {
         if (button) button.disabled = false;
       }
     });
   });
-
-  }));
   function renderRecords(){const el=document.getElementById('records'),all=getRecords();el.replaceChildren();if(!all.length){el.textContent='مازال ما تسجّل حتى ملف فهاد المتصفح.';return}
     all.forEach(r=>{const div=document.createElement('div');div.className='item';const title=document.createElement('strong');title.textContent=r.kind+' — '+r.category;const meta=document.createElement('small');meta.textContent='المرجع: '+r.ref+' | '+new Date(r.createdAt).toLocaleString('ar-MA')+' | '+r.status;const body=document.createElement('p');body.textContent=r.details;div.append(title,document.createElement('br'),meta,body);el.append(div)})
   }
