@@ -147,7 +147,7 @@
   const saveRecords=x=>localStorage.setItem(KEY,JSON.stringify(x));
   function makeRef(){return 'AZ-'+new Date().getFullYear()+'-'+Math.random().toString(36).slice(2,8).toUpperCase()}
   // إعدادات Supabase: عوّض القيمتين قبل نشر الموقع
-  const SUPABASE_URL = 'https://vliadiyanlhccupgeuam.supabase.co/rest/v1/';
+  const SUPABASE_URL = 'https://vliadiyanlhccupgeuam.supabase.co';
   const SUPABASE_KEY = 'sb_publishable_0OCDAbzSvoQBr8OWij1dqA_z_MCOd7l';
 
   document.querySelectorAll('form[data-kind]').forEach(form => {
