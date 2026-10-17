@@ -366,8 +366,9 @@ function statusOptions(currentStatus) {
     if (!session) {
       dashboard.classList.add('hidden');
       loginPanel.classList.remove('hidden');
-      const { data: { user } } = await client.auth.getUser();
-const welcome = document.getElementById('welcomeMessage');
+const { data: { user }, error } = await client.auth.getUser();
+
+console.log('اسم المستخدم:', user?.user_metadata?.full_name, error);const welcome = document.getElementById('welcomeMessage');
 
 if (welcome && user) {
   const username =
