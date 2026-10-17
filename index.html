@@ -169,8 +169,17 @@
 <footer>جماعة أزيار الرقمية — نموذج أولي تجريبي، غير معتمد رسمياً بعد.</footer>
 <script>
   const sections = [...document.querySelectorAll('.section')];
-  function showSection(id){sections.forEach(s=>s.classList.toggle('active',s.id===id));document.querySelectorAll('.nav button').forEach(b=>b.classList.toggle('active',b.dataset.section===id));if(id==='tracking')renderRecords();window.scrollTo({top:0,behavior:'smooth'});}
-  document.querySelectorAll('[data-section]').forEach(b=>b.addEventListener('click',()=>showSection(b.dataset.section)));
+function showSection(id) {
+  sections.forEach(s =>
+    s.classList.toggle('active', s.id === id)
+  );
+
+  document.querySelectorAll('.nav button').forEach(b =>
+    b.classList.toggle('active', b.dataset.section === id)
+  );
+
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}  document.querySelectorAll('[data-section]').forEach(b=>b.addEventListener('click',()=>showSection(b.dataset.section)));
   document.querySelectorAll('[data-go]').forEach(a=>a.addEventListener('click',e=>{e.preventDefault();showSection(a.dataset.go)}));
   const KEY='aziar_demo_records_v1';
   const getRecords=()=>{try{return JSON.parse(localStorage.getItem(KEY)||'[]')}catch{return []}};
