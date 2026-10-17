@@ -516,6 +516,7 @@ document.getElementById('rejectedCount').textContent =
       detailsButton.type = 'button';
       detailsButton.className = 'secondary';
       detailsButton.textContent = '...';
+      detailsButton.style.cssText = 'padding: 4px 10px; font-size: 18px; line-height: 1; min-width: 35px;';
 
       detailsButton.addEventListener('click', () => {
         showRecordDetails(record);
