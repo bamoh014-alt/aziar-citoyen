@@ -477,6 +477,19 @@ document.getElementById('rejectedCount').textContent =
       );
 
       const statusCell = document.createElement('td');
+            const detailsCell = document.createElement('td');
+      const detailsButton = document.createElement('button');
+
+      detailsButton.type = 'button';
+      detailsButton.className = 'secondary';
+      detailsButton.textContent = 'عرض التفاصيل';
+
+      detailsButton.addEventListener('click', () => {
+        showRecordDetails(record);
+      });
+
+      detailsCell.appendChild(detailsButton);
+      tr.appendChild(detailsCell);
       const select = document.createElement('select');
       
 select.classList.add('status-badge');
