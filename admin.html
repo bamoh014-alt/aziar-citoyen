@@ -334,23 +334,25 @@ function statusOptions(currentStatus) {
     summary.textContent = 'عدد الطلبات: ' + allRecords.length +
       ' | المعروضة: ' + filtered.length;
     
+
 document.getElementById('totalCount').textContent =
   allRecords.length;
 
 document.getElementById('receivedCount').textContent =
   allRecords.filter(record =>
-    record.status === 'تم استلام الطلب'
+    record.status === 'received'
   ).length;
 
 document.getElementById('processingCount').textContent =
   allRecords.filter(record =>
-    record.status === 'قيد المعالجة'
+    record.status === 'in_review'
   ).length;
 
 document.getElementById('completedCount').textContent =
   allRecords.filter(record =>
-    record.status === 'تمت المعالجة'
+    record.status === 'resolved'
   ).length;
+
 
 
     filtered.forEach(record => {
