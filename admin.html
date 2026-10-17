@@ -405,8 +405,7 @@ async function updateScreen() {
       user.email?.split('@')[0] ||
       'المستخدم';
 
-    welcome.textContent = `مرحباً بك، ${username} 👋`;
-  }
+welcome.textContent = `مرحباً بك، السيد ${username} 👋`;  }
 
   resetInactivityTimer();
   await loadRecords();
