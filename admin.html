@@ -333,6 +333,25 @@ function statusOptions(currentStatus) {
     recordsBody.replaceChildren();
     summary.textContent = 'عدد الطلبات: ' + allRecords.length +
       ' | المعروضة: ' + filtered.length;
+    
+document.getElementById('totalCount').textContent =
+  allRecords.length;
+
+document.getElementById('receivedCount').textContent =
+  allRecords.filter(record =>
+    record.status === 'تم استلام الطلب'
+  ).length;
+
+document.getElementById('processingCount').textContent =
+  allRecords.filter(record =>
+    record.status === 'قيد المعالجة'
+  ).length;
+
+document.getElementById('completedCount').textContent =
+  allRecords.filter(record =>
+    record.status === 'تمت المعالجة'
+  ).length;
+
 
     filtered.forEach(record => {
       const tr = document.createElement('tr');
