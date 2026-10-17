@@ -249,16 +249,17 @@
 
         select.disabled = false;
 
-        if (error) {
-          select.value = record.status;
-          showMessage(
-            dashboardMessage,
-            'تعذر تحديث الحالة. تأكد من الصلاحيات والاتصال.',
-            true
-          );
-          console.error(error);
-          return;
-        }
+       if (error) {
+  select.value = record.status;
+  showMessage(
+    dashboardMessage,
+    'خطأ: ' + error.message +
+    (error.code ? ' | Code: ' + error.code : ''),
+    true
+  );
+  console.error(error);
+  return;
+}
 
         record.status = newStatus;
         showMessage(dashboardMessage, 'تم تحديث حالة الطلب بنجاح.');
