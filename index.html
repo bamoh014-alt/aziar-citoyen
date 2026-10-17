@@ -339,8 +339,31 @@ document.getElementById('trackingForm').addEventListener('submit', async e => {
   function renderRecords(){const el=document.getElementById('records'),all=getRecords();el.replaceChildren();if(!all.length){el.textContent='مازال ما تسجّل حتى ملف فهاد المتصفح.';return}
     all.forEach(r=>{const div=document.createElement('div');div.className='item';const title=document.createElement('strong');title.textContent=r.kind+' — '+r.category;const meta=document.createElement('small');meta.textContent='المرجع: '+r.ref+' | '+new Date(r.createdAt).toLocaleString('ar-MA')+' | '+r.status;const body=document.createElement('p');body.textContent=r.details;div.append(title,document.createElement('br'),meta,body);el.append(div)})
   }
-  document.getElementById('exportBtn').addEventListener('click',()=>{const blob=new Blob([JSON.stringify(getRecords(),null,2)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='aziar-demo-records.json';a.click();URL.revokeObjectURL(a.href)});
-  document.getElementById('clearBtn').addEventListener('click',()=>{if(confirm('واش متأكد بغيتي تمسح جميع بيانات التجربة من هاد المتصفح؟')){localStorage.removeItem(KEY);renderRecords()}});
+
+const exportBtn = document.getElementById('exportBtn');
+if (exportBtn) {
+  exportBtn.addEventListener('click', () => {
+    const blob = new Blob(
+      [JSON.stringify(getRecords(), null, 2)],
+      { type: 'application/json' }
+    );
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'aziar-demo-records.json';
+    a.click();
+    URL.revokeObjectURL(a.href);
+  });
+}
+
+const clearBtn = document.getElementById('clearBtn');
+if (clearBtn) {
+  clearBtn.addEventListener('click', () => {
+    if (confirm('واش متأكد بغيتي تمسح جميع بيانات التجربة من هاد المتصفح؟')) {
+      localStorage.removeItem(KEY);
+      renderRecords();
+    }
+  });
+}
   const answers=[
     {keys:['وقت','أوقات العمل','التوقيت','ساعات العمل'],answer:'ما عنديش دابا توقيت رسمي مؤكد. خاص الجماعة تحدد أيام وساعات الاستقبال الرسمية قبل نشرها هنا. المرجو التأكد من الإعلان الرسمي أو التواصل مع مقر الجماعة.'},
     {keys:['شكاية','شكايه','تبليغ','نشتكي'],answer:'تقدر تختار «شكاية أو تبليغ» من القائمة، تحدد نوع المشكل والمكان، وتشرح التفاصيل. فهاد النسخة التجريبية الشكاية كتبقى فالمتصفح وما كتتوصلش بها الجماعة.'},
