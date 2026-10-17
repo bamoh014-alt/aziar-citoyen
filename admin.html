@@ -366,8 +366,7 @@ function statusOptions(currentStatus) {
     if (!session) {
       dashboard.classList.add('hidden');
       loginPanel.classList.remove('hidden');
-const user = session.user;
-
+const user = session?.user;
 if (welcome && user) {
   const username =
     user.user_metadata?.full_name ||
