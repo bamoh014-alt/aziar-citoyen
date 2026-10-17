@@ -180,8 +180,7 @@
     return types[value] || value || '';
   }
 
-  function statusOptions(currentStatus) {
-    const STATUS_LABELS = {
+  const STATUS_LABELS = {
   received: 'تم استلام الطلب',
   in_review: 'قيد المعالجة',
   resolved: 'تمت المعالجة',
@@ -234,13 +233,13 @@ function statusOptions(currentStatus) {
       const statusCell = document.createElement('td');
       const select = document.createElement('select');
 
-      statusOptions(record.status).forEach(status => {
-        const option = document.createElement('option');
-       record.status = newStatus;
-option.textContent = STATUS_LABELS[status] || status;
-        option.selected = status === record.status;
-        select.appendChild(option);
-      });
+    statusOptions(record.status).forEach(status => {
+  const option = document.createElement('option');
+  option.value = status;
+  option.textContent = STATUS_LABELS[status] || status;
+  option.selected = status === record.status;
+  select.appendChild(option);
+});
 
       select.addEventListener('change', async () => {
         const newStatus = select.value;
