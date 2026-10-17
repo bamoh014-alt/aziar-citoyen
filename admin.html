@@ -278,6 +278,7 @@
             <th>التفاصيل</th>
             <th>التواصل</th>
             <th>التاريخ</th>
+            <th>الإجراءات</th>
             <th>الحالة</th>
           </tr>
         </thead>
@@ -405,7 +406,37 @@ function resetInactivityTimer() {
   resolved: 'تمت المعالجة',
   rejected: 'مرفوض'
 };
+function showRecordDetails(record) {
+  document.getElementById('detailReference').textContent =
+    record.reference_code || '—';
 
+  document.getElementById('detailType').textContent =
+    typeLabel(record.submission_type) || '—';
+
+  document.getElementById('detailCategory').textContent =
+    record.category || '—';
+
+  document.getElementById('detailDouar').textContent =
+    record.douar || '—';
+
+  document.getElementById('detailDescription').textContent =
+    record.details || '—';
+
+  document.getElementById('detailContact').textContent =
+    record.contact || '—';
+
+  document.getElementById('detailDate').textContent =
+    formatDate(record.created_at) || '—';
+
+  document.getElementById('detailStatus').textContent =
+    STATUS_LABELS[record.status] || record.status || '—';
+
+  document.getElementById('detailsModal').classList.remove('hidden');
+}
+
+document.getElementById('closeDetailsModal').addEventListener('click', () => {
+  document.getElementById('detailsModal').classList.add('hidden');
+});
 function statusOptions(currentStatus) {
   const statuses = ['received', 'in_review', 'resolved', 'rejected'];
 
