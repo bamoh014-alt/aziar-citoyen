@@ -181,17 +181,22 @@
   }
 
   function statusOptions(currentStatus) {
-    const statuses = [
-      'تم استلام الطلب',
-      'قيد المعالجة',
-      'تمت المعالجة',
-      'مرفوض'
-    ];
-    if (currentStatus && !statuses.includes(currentStatus)) {
-      statuses.unshift(currentStatus);
-    }
-    return statuses;
+    const STATUS_LABELS = {
+  received: 'تم استلام الطلب',
+  in_review: 'قيد المعالجة',
+  resolved: 'تمت المعالجة',
+  rejected: 'مرفوض'
+};
+
+function statusOptions(currentStatus) {
+  const statuses = ['received', 'in_review', 'resolved', 'rejected'];
+
+  if (currentStatus && !statuses.includes(currentStatus)) {
+    statuses.unshift(currentStatus);
   }
+
+  return statuses;
+}
 
   function renderRecords() {
     const term = document.getElementById('search').value.trim().toLowerCase();
