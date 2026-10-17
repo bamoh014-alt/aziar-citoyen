@@ -414,6 +414,20 @@ document.getElementById('rejectedCount').textContent =
 
       const statusCell = document.createElement('td');
       const select = document.createElement('select');
+      
+select.classList.add('status-badge');
+
+const statusColors = {
+  received: 'status-received',
+  in_review: 'status-in-review',
+  resolved: 'status-resolved',
+  rejected: 'status-rejected'
+};
+
+if (statusColors[record.status]) {
+  select.classList.add(statusColors[record.status]);
+}
+
 
     statusOptions(record.status).forEach(status => {
   const option = document.createElement('option');
