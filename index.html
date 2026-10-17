@@ -131,10 +131,40 @@
     </div>
   </section>
 
-  <section id="tracking" class="section">
-    <h2 class="section-title">الملفات التجريبية المسجلة على هاد المتصفح</h2>
-    <div class="panel"><p class="muted">هاد اللائحة كتبيّن غير الملفات اللي تسجلات فهاد المتصفح. ماشي تتبع رسمي وما يقدرش يشوفها موظف من جهاز آخر.</p><div id="records" class="items"></div><button class="btn secondary" id="exportBtn" type="button">تحميل نسخة JSON</button> <button class="btn secondary" id="clearBtn" type="button">مسح بيانات التجربة</button></div>
-  </section>
+ 
+<section id="tracking" class="section">
+  <h2 class="section-title">تتبع الطلب</h2>
+  <div class="panel">
+    <p class="muted">
+      دخل الرقم المرجعي ووسيلة الاتصال اللي سجلتي بها الطلب
+      باش تشوف الحالة ديالو.
+    </p>
+
+    <form id="trackingForm">
+      <label for="trackRef">الرقم المرجعي</label>
+      <input
+        id="trackRef"
+        name="reference"
+        placeholder="مثال: AZ-7336C948"
+        required
+      >
+
+      <label for="trackContact">وسيلة الاتصال</label>
+      <input
+        id="trackContact"
+        name="contact"
+        placeholder="نفس الهاتف أو البريد المسجل"
+        required
+      >
+
+      <button class="btn primary" type="submit">
+        البحث عن الطلب
+      </button>
+      <div id="trackingResult" class="success" role="status"></div>
+    </form>
+  </div>
+</section>
+
 </main>
 <footer>جماعة أزيار الرقمية — نموذج أولي تجريبي، غير معتمد رسمياً بعد.</footer>
 <script>
