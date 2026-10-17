@@ -1,0 +1,403 @@
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>لوحة إدارة المواطنين - جماعة أزيار</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Tahoma, Arial, sans-serif;
+      background: #f3f6f8;
+      color: #233044;
+    }
+    header {
+      background: #176b50;
+      color: white;
+      padding: 24px 16px;
+      text-align: center;
+    }
+    header h1 { margin: 0 0 8px; font-size: 24px; }
+    main { max-width: 1100px; margin: 25px auto; padding: 0 14px; }
+    .panel {
+      background: white;
+      border-radius: 12px;
+      padding: 22px;
+      margin-bottom: 20px;
+      box-shadow: 0 3px 12px #0000000a;
+    }
+    h2 { margin-top: 0; }
+    input, select, button {
+      font: inherit;
+      padding: 11px;
+      border-radius: 7px;
+      border: 1px solid #ccd5dc;
+    }
+    input { display: block; width: 100%; margin: 12px 0; }
+    button {
+      border: 0;
+      cursor: pointer;
+      background: #176b50;
+      color: white;
+    }
+    button:disabled { opacity: .6; cursor: wait; }
+    .secondary { background: #46566a; }
+    .danger { background: #a83232; }
+    .hidden { display: none !important; }
+    #message { margin-top: 12px; line-height: 1.8; }
+    .error { color: #b42318; }
+    .success { color: #147d45; }
+    .toolbar {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+    .toolbar input { flex: 1; min-width: 180px; margin: 0; }
+    .table-wrap { overflow-x: auto; }
+    table { width: 100%; border-collapse: collapse; min-width: 780px; }
+    th, td {
+      padding: 12px 10px;
+      text-align: right;
+      border-bottom: 1px solid #e5e9ed;
+      vertical-align: top;
+    }
+    th { background: #edf4f1; }
+    td select { min-width: 155px; }
+    .details { white-space: pre-wrap; overflow-wrap: anywhere; max-width: 280px; }
+    .muted { color: #657385; font-size: 13px; }
+    @media (max-width: 600px) {
+      header h1 { font-size: 20px; }
+      .panel { padding: 15px; }
+    }
+  </style>
+</head>
+<body>
+<header>
+  <h1>لوحة إدارة المواطنين</h1>
+  <div>جماعة أزيار - قيادة إيموزار</div>
+</header>
+
+<main>
+  <section id="loginPanel" class="panel">
+    <h2>تسجيل دخول الإدارة</h2>
+    <p class="muted">خاصك تستعمل البريد الإلكتروني وكلمة المرور ديال حساب الإدارة.</p>
+    <form id="loginForm">
+      <label for="email">البريد الإلكتروني</label>
+      <input id="email" type="email" autocomplete="username" required>
+      <label for="password">كلمة المرور</label>
+      <input id="password" type="password" autocomplete="current-password" required>
+      <button id="loginButton" type="submit">تسجيل الدخول</button>
+    </form>
+    <div id="loginMessage" role="status"></div>
+  </section>
+
+  <section id="dashboard" class="hidden">
+    <div class="panel">
+      <div class="toolbar">
+        <h2 style="margin:0;flex:1">الشكايات والطلبات</h2>
+        <button id="refreshButton" class="secondary" type="button">تحديث</button>
+        <button id="logoutButton" class="danger" type="button">تسجيل الخروج</button>
+      </div>
+      <p id="summary" class="muted"></p>
+      <div class="toolbar">
+        <input id="search" type="search" placeholder="بحث بالرقم المرجعي أو الدوار أو النوع">
+        <select id="filter">
+          <option value="">جميع الحالات</option>
+          <option value="تم استلام الطلب">تم استلام الطلب</option>
+          <option value="قيد المعالجة">قيد المعالجة</option>
+          <option value="تمت المعالجة">تمت المعالجة</option>
+          <option value="مرفوض">مرفوض</option>
+        </select>
+      </div>
+      <div id="dashboardMessage" role="status"></div>
+    </div>
+
+    <div class="panel table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>الرقم المرجعي</th>
+            <th>النوع</th>
+            <th>الفئة</th>
+            <th>الدوار</th>
+            <th>التفاصيل</th>
+            <th>التواصل</th>
+            <th>التاريخ</th>
+            <th>الحالة</th>
+          </tr>
+        </thead>
+        <tbody id="records"></tbody>
+      </table>
+    </div>
+  </section>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+  // عوّض هاد الجوج بالقيم ديال مشروعك
+  const SUPABASE_URL = 'https://vliadiyanlhccupgeuam.supabase.co';
+  const SUPABASE_KEY = 'sb_publishable_0OCDAbzSvoQBr8OWij1dqA_z_MCOd7l';
+
+  const loginPanel = document.getElementById('loginPanel');
+  const dashboard = document.getElementById('dashboard');
+  const loginMessage = document.getElementById('loginMessage');
+  const dashboardMessage = document.getElementById('dashboardMessage');
+  const recordsBody = document.getElementById('records');
+  const summary = document.getElementById('summary');
+
+  let client;
+  let allRecords = [];
+
+  function showMessage(element, message, isError = false) {
+    element.textContent = message;
+    element.className = isError ? 'error' : 'success';
+  }
+
+  function makeCell(value, className = '') {
+    const td = document.createElement('td');
+    td.textContent = value == null ? '' : String(value);
+    if (className) td.className = className;
+    return td;
+  }
+
+  function formatDate(value) {
+    if (!value) return '';
+    const date = new Date(value);
+    return Number.isNaN(date.getTime()) ? '' : date.toLocaleString('fr-FR');
+  }
+
+  function typeLabel(value) {
+    const types = {
+      complaint: 'شكاية',
+      suggestion: 'اقتراح',
+      request: 'طلب',
+      opinion: 'رأي'
+    };
+    return types[value] || value || '';
+  }
+
+  function statusOptions(currentStatus) {
+    const statuses = [
+      'تم استلام الطلب',
+      'قيد المعالجة',
+      'تمت المعالجة',
+      'مرفوض'
+    ];
+    if (currentStatus && !statuses.includes(currentStatus)) {
+      statuses.unshift(currentStatus);
+    }
+    return statuses;
+  }
+
+  function renderRecords() {
+    const term = document.getElementById('search').value.trim().toLowerCase();
+    const chosenStatus = document.getElementById('filter').value;
+
+    const filtered = allRecords.filter(record => {
+      const searchable = [
+        record.reference_code,
+        record.submission_type,
+        record.category,
+        record.douar
+      ].join(' ').toLowerCase();
+
+      return searchable.includes(term) &&
+        (!chosenStatus || record.status === chosenStatus);
+    });
+
+    recordsBody.replaceChildren();
+    summary.textContent = 'عدد الطلبات: ' + allRecords.length +
+      ' | المعروضة: ' + filtered.length;
+
+    filtered.forEach(record => {
+      const tr = document.createElement('tr');
+
+      tr.append(
+        makeCell(record.reference_code),
+        makeCell(typeLabel(record.submission_type)),
+        makeCell(record.category),
+        makeCell(record.douar),
+        makeCell(record.details, 'details'),
+        makeCell(record.contact),
+        makeCell(formatDate(record.created_at))
+      );
+
+      const statusCell = document.createElement('td');
+      const select = document.createElement('select');
+
+      statusOptions(record.status).forEach(status => {
+        const option = document.createElement('option');
+        option.value = status;
+        option.textContent = status;
+        option.selected = status === record.status;
+        select.appendChild(option);
+      });
+
+      select.addEventListener('change', async () => {
+        const newStatus = select.value;
+        select.disabled = true;
+        showMessage(dashboardMessage, 'جاري تحديث الحالة...');
+
+        const { error } = await client
+          .from('citizen_submissions')
+          .update({ status: newStatus })
+          .eq('id', record.id);
+
+        select.disabled = false;
+
+        if (error) {
+          select.value = record.status;
+          showMessage(
+            dashboardMessage,
+            'تعذر تحديث الحالة. تأكد من الصلاحيات والاتصال.',
+            true
+          );
+          console.error(error);
+          return;
+        }
+
+        record.status = newStatus;
+        showMessage(dashboardMessage, 'تم تحديث حالة الطلب بنجاح.');
+        renderRecords();
+      });
+
+      statusCell.appendChild(select);
+      tr.appendChild(statusCell);
+      recordsBody.appendChild(tr);
+    });
+
+    if (!filtered.length) {
+      const tr = document.createElement('tr');
+      const td = makeCell('لا توجد طلبات مطابقة.');
+      td.colSpan = 8;
+      tr.appendChild(td);
+      recordsBody.appendChild(tr);
+    }
+  }
+
+  async function loadRecords() {
+    showMessage(dashboardMessage, 'جاري تحميل الطلبات...');
+
+    const { data, error } = await client
+      .from('citizen_submissions')
+      .select('id, reference_code, submission_type, category, douar, details, contact, status, created_at')
+      .order('created_at', { ascending: false });
+
+    if (error) {
+      showMessage(
+        dashboardMessage,
+        'تعذر تحميل الطلبات. تأكد من تسجيل الدخول وسياسات RLS.',
+        true
+      );
+      console.error(error);
+      return;
+    }
+
+    allRecords = data || [];
+    renderRecords();
+    showMessage(dashboardMessage, 'تم تحميل الطلبات.');
+  }
+
+  async function updateScreen() {
+    const { data, error } = await client.auth.getSession();
+
+    if (error) {
+      showMessage(loginMessage, 'تعذر التحقق من جلسة الدخول.', true);
+      return;
+    }
+
+    const session = data.session;
+    if (!session) {
+      dashboard.classList.add('hidden');
+      loginPanel.classList.remove('hidden');
+      return;
+    }
+
+    // تحقق أن الحساب عضو في جدول الإدارة.
+    const { data: admin, error: adminError } = await client
+      .from('admin_users')
+      .select('user_id')
+      .eq('user_id', session.user.id)
+      .maybeSingle();
+
+    if (adminError || !admin) {
+      await client.auth.signOut();
+      dashboard.classList.add('hidden');
+      loginPanel.classList.remove('hidden');
+      showMessage(
+        loginMessage,
+        'هاد الحساب ما عندوش صلاحية الإدارة.',
+        true
+      );
+      return;
+    }
+
+    loginPanel.classList.add('hidden');
+    dashboard.classList.remove('hidden');
+    await loadRecords();
+  }
+
+  async function start() {
+    if (!window.supabase) {
+      showMessage(loginMessage, 'تعذر تحميل مكتبة الاتصال. تحقق من الإنترنت.', true);
+      return;
+    }
+
+    if (
+      !SUPABASE_URL.startsWith('https://') ||
+      SUPABASE_KEY === 'لسق_هنا_Publishable_key_ديالك'
+    ) {
+      showMessage(loginMessage, 'خاصك تعمّر Publishable key فالكود أولاً.', true);
+      return;
+    }
+
+    client = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+    document.getElementById('loginForm').addEventListener('submit', async event => {
+      event.preventDefault();
+
+      const button = document.getElementById('loginButton');
+      button.disabled = true;
+      showMessage(loginMessage, 'جاري تسجيل الدخول...');
+
+      const email = document.getElementById('email').value.trim();
+      const password = document.getElementById('password').value;
+
+      const { error } = await client.auth.signInWithPassword({ email, password });
+
+      button.disabled = false;
+
+      if (error) {
+        showMessage(loginMessage, 'فشل تسجيل الدخول. تحقق من البريد وكلمة المرور.', true);
+        console.error(error);
+        return;
+      }
+
+      await updateScreen();
+    });
+
+    document.getElementById('logoutButton').addEventListener('click', async () => {
+      await client.auth.signOut();
+      allRecords = [];
+      recordsBody.replaceChildren();
+      dashboard.classList.add('hidden');
+      loginPanel.classList.remove('hidden');
+      document.getElementById('password').value = '';
+      showMessage(loginMessage, 'تم تسجيل الخروج.');
+    });
+
+    document.getElementById('refreshButton').addEventListener('click', loadRecords);
+    document.getElementById('search').addEventListener('input', renderRecords);
+    document.getElementById('filter').addEventListener('change', renderRecords);
+
+    await updateScreen();
+  }
+
+  start();
+</script>
+</body>
+</html>
