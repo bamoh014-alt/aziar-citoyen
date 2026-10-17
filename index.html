@@ -15,6 +15,21 @@
     .notice{background:#fff7ed;color:#9a3412;border:1px solid #fed7aa;padding:12px 14px;border-radius:12px;margin:18px auto;font-size:13px}
     .nav{display:flex;gap:8px;flex-wrap:wrap;margin:18px 0}.nav button{border:1px solid var(--line);background:#fff;padding:10px 14px;border-radius:10px;cursor:pointer;font:inherit;color:var(--ink)}
     .nav button.active,.primary{background:var(--green);border-color:var(--green);color:#fff}.nav button:hover,.secondary:hover{border-color:var(--green)}
+.nav .admin-link {
+  display: inline-block;
+  border: 1px solid var(--green);
+  background: var(--green);
+  color: #fff;
+  padding: 10px 14px;
+  border-radius: 10px;
+  cursor: pointer;
+  font: inherit;
+  text-decoration: none;
+}
+.nav .admin-link:hover {
+  background: var(--green-dark);
+}
+
     main{padding:10px 0 40px}.hero{display:grid;grid-template-columns:1.2fr .8fr;gap:18px;align-items:stretch}
     .panel,.service{background:var(--white);border:1px solid var(--line);border-radius:16px;padding:22px;box-shadow:0 4px 14px #0f172a08}
     .hero h2{font-size:25px;margin:0 0 8px}.muted{color:var(--muted);font-size:14px}
@@ -46,6 +61,9 @@
     <button data-section="request">طلب إداري</button>
     <button data-section="assistant">المجيب الآلي</button>
     <button data-section="tracking">تتبع الملفات التجريبية</button>
+    
+<a href="admin.html" class="admin-link">🔐 فضاء الإدارة</a>
+
   </nav>
 </div>
 <main class="wrap">
