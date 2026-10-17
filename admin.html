@@ -152,6 +152,50 @@
   let client;
   let allRecords = [];
 
+  
+let inactivityTimer = null;
+const INACTIVITY_LIMIT = 10 * 60 * 1000;
+
+function stopInactivityTimer() {
+  if (inactivityTimer) {
+    clearTimeout(inactivityTimer);
+    inactivityTimer = null;
+  }
+}
+
+function resetInactivityTimer() {
+  stopInactivityTimer();
+
+  if (!client || dashboard.classList.contains('hidden')) {
+    return;
+  }
+
+  inactivityTimer = setTimeout(async () => {
+    stopInactivityTimer();
+
+    await client.auth.signOut();
+
+    allRecords = [];
+    recordsBody.replaceChildren();
+    dashboard.classList.add('hidden');
+    loginPanel.classList.remove('hidden');
+    document.getElementById('password').value = '';
+
+    showMessage(
+      loginMessage,
+      'تم تسجيل الخروج تلقائياً بعد 10 دقائق بلا نشاط.'
+    );
+  }, INACTIVITY_LIMIT);
+}
+
+['mousemove', 'mousedown', 'keydown', 'touchstart', 'scroll', 'click']
+  .forEach(eventName => {
+    document.addEventListener(eventName, () => {
+      resetInactivityTimer();
+    }, { passive: true });
+  });
+
+
   function showMessage(element, message, isError = false) {
     element.textContent = message;
     element.className = isError ? 'error' : 'success';
@@ -342,8 +386,9 @@ function statusOptions(currentStatus) {
     }
 
     loginPanel.classList.add('hidden');
-    dashboard.classList.remove('hidden');
-    await loadRecords();
+dashboard.classList.remove('hidden');
+resetInactivityTimer();
+await loadRecords();
   }
 
   async function start() {
@@ -360,7 +405,14 @@ function statusOptions(currentStatus) {
       return;
     }
 
-    client = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+client = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY, {
+  auth: {
+    persistSession: false,
+    autoRefreshToken: true,
+    detectSessionInUrl: false
+  }
+});
 
     document.getElementById('loginForm').addEventListener('submit', async event => {
       event.preventDefault();
@@ -386,6 +438,7 @@ function statusOptions(currentStatus) {
     });
 
     document.getElementById('logoutButton').addEventListener('click', async () => {
+      stopInactivityTimer();
       await client.auth.signOut();
       allRecords = [];
       recordsBody.replaceChildren();
