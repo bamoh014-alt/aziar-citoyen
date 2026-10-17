@@ -354,64 +354,63 @@ function statusOptions(currentStatus) {
     showMessage(dashboardMessage, 'تم تحميل الطلبات.');
   }
 
-  async function updateScreen() {
-    const { data, error } = await client.auth.getSession();
+ 
+async function updateScreen() {
+  const { data, error } = await client.auth.getSession();
 
-    if (error) {
-      showMessage(loginMessage, 'تعذر التحقق من جلسة الدخول.', true);
-      return;
-    }
+  if (error) {
+    showMessage(loginMessage, 'تعذر التحقق من جلسة الدخول.', true);
+    return;
+  }
 
   const session = data.session;
 
-if (!session) {
-  dashboard.classList.add('hidden');
-  loginPanel.classList.remove('hidden');
-  return;
-}
-
-loginPanel.classList.add('hidden');
-dashboard.classList.remove('hidden');
-
-const user = session.user;
-const welcome = document.getElementById('welcomeMessage');
-
-if (welcome && user) {
-  const username =
-    user.user_metadata?.full_name ||
-    user.user_metadata?.name ||
-    user.email?.split('@')[0] ||
-    'المستخدم';
-
-  welcome.textContent = `مرحباً بك، ${username} 👋`;
-}
-      return;
-    }
-
-    // تحقق أن الحساب عضو في جدول الإدارة.
-    const { data: admin, error: adminError } = await client
-      .from('admin_users')
-      .select('user_id')
-      .eq('user_id', session.user.id)
-      .maybeSingle();
-
-    if (adminError || !admin) {
-      await client.auth.signOut();
-      dashboard.classList.add('hidden');
-      loginPanel.classList.remove('hidden');
-      showMessage(
-        loginMessage,
-        'هاد الحساب ما عندوش صلاحية الإدارة.',
-        true
-      );
-      return;
-    }
-
-    loginPanel.classList.add('hidden');
-dashboard.classList.remove('hidden');
-resetInactivityTimer();
-await loadRecords();
+  if (!session) {
+    stopInactivityTimer();
+    dashboard.classList.add('hidden');
+    loginPanel.classList.remove('hidden');
+    return;
   }
+
+  // التحقق من صلاحية الإدارة
+  const { data: admin, error: adminError } = await client
+    .from('admin_users')
+    .select('user_id')
+    .eq('user_id', session.user.id)
+    .maybeSingle();
+
+  if (adminError || !admin) {
+    await client.auth.signOut();
+    dashboard.classList.add('hidden');
+    loginPanel.classList.remove('hidden');
+    showMessage(
+      loginMessage,
+      'هاد الحساب ما عندوش صلاحية الإدارة.',
+      true
+    );
+    return;
+  }
+
+  // إظهار لوحة الإدارة والترحيب باسم المستخدم
+  loginPanel.classList.add('hidden');
+  dashboard.classList.remove('hidden');
+
+  const user = session.user;
+  const welcome = document.getElementById('welcomeMessage');
+
+  if (welcome && user) {
+    const username =
+      user.user_metadata?.full_name ||
+      user.user_metadata?.name ||
+      user.email?.split('@')[0] ||
+      'المستخدم';
+
+    welcome.textContent = `مرحباً بك، ${username} 👋`;
+  }
+
+  resetInactivityTimer();
+  await loadRecords();
+}
 
   async function start() {
     if (!window.supabase) {
