@@ -366,6 +366,18 @@ function statusOptions(currentStatus) {
     if (!session) {
       dashboard.classList.add('hidden');
       loginPanel.classList.remove('hidden');
+      const { data: { user } } = await client.auth.getUser();
+const welcome = document.getElementById('welcomeMessage');
+
+if (welcome && user) {
+  const username =
+    user.user_metadata?.full_name ||
+    user.user_metadata?.name ||
+    user.email?.split('@')[0] ||
+    'المستخدم';
+
+  welcome.textContent = `مرحباً بك، ${username} 👋`;
+}
       return;
     }
 
