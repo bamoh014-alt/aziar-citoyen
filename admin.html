@@ -362,11 +362,20 @@ function statusOptions(currentStatus) {
       return;
     }
 
-    const session = data.session;
-    if (!session) {
-      dashboard.classList.add('hidden');
-      loginPanel.classList.remove('hidden');
-const user = session?.user;
+  const session = data.session;
+
+if (!session) {
+  dashboard.classList.add('hidden');
+  loginPanel.classList.remove('hidden');
+  return;
+}
+
+loginPanel.classList.add('hidden');
+dashboard.classList.remove('hidden');
+
+const user = session.user;
+const welcome = document.getElementById('welcomeMessage');
+
 if (welcome && user) {
   const username =
     user.user_metadata?.full_name ||
