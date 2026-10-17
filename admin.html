@@ -236,8 +236,8 @@ function statusOptions(currentStatus) {
 
       statusOptions(record.status).forEach(status => {
         const option = document.createElement('option');
-        option.value = status;
-        option.textContent = status;
+       record.status = newStatus;
+option.textContent = STATUS_LABELS[status] || status;
         option.selected = status === record.status;
         select.appendChild(option);
       });
