@@ -996,6 +996,67 @@ function showSection(id) {
   const SUPABASE_URL = 'https://vliadiyanlhccupgeuam.supabase.co';
   const SUPABASE_KEY = 'sb_publishable_0OCDAbzSvoQBr8OWij1dqA_z_MCOd7l';
 
+const complaintPhotoInput = document.getElementById('c-photo');
+const complaintPhotoPreview = document.getElementById('c-photo-preview');
+const complaintPhotoRemove = document.getElementById('c-photo-remove');
+
+let complaintPhotoObjectUrl = null;
+
+if (complaintPhotoInput && complaintPhotoPreview && complaintPhotoRemove) {
+  complaintPhotoInput.addEventListener('change', () => {
+    const file = complaintPhotoInput.files[0];
+
+    if (complaintPhotoObjectUrl) {
+      URL.revokeObjectURL(complaintPhotoObjectUrl);
+      complaintPhotoObjectUrl = null;
+    }
+
+    complaintPhotoPreview.removeAttribute('src');
+    complaintPhotoPreview.style.display = 'none';
+    complaintPhotoRemove.style.display = 'none';
+
+    if (!file) return;
+
+    const allowedTypes = ['image/jpeg', 'image/png', 'image/webp'];
+
+    if (!allowedTypes.includes(file.type)) {
+      alert(currentLanguage === 'fr'
+        ? 'Veuillez choisir une image JPG, PNG ou WebP.'
+        : 'اختار صورة بصيغة JPG أو PNG أو WebP.');
+
+      complaintPhotoInput.value = '';
+      return;
+    }
+
+    if (file.size > 3 * 1024 * 1024) {
+      alert(currentLanguage === 'fr'
+        ? 'La taille de l’image ne doit pas dépasser 3 Mo.'
+        : 'حجم الصورة خاصو ما يفوتش 3 ميغابايت.');
+
+      complaintPhotoInput.value = '';
+      return;
+    }
+
+    complaintPhotoObjectUrl = URL.createObjectURL(file);
+    complaintPhotoPreview.src = complaintPhotoObjectUrl;
+    complaintPhotoPreview.style.display = 'block';
+    complaintPhotoRemove.style.display = 'inline-block';
+  });
+
+  complaintPhotoRemove.addEventListener('click', () => {
+    complaintPhotoInput.value = '';
+
+    if (complaintPhotoObjectUrl) {
+      URL.revokeObjectURL(complaintPhotoObjectUrl);
+      complaintPhotoObjectUrl = null;
+    }
+
+    complaintPhotoPreview.removeAttribute('src');
+    complaintPhotoPreview.style.display = 'none';
+    complaintPhotoRemove.style.display = 'none';
+  });
+}
+
   document.querySelectorAll('form[data-kind]').forEach(form => {
     form.addEventListener('submit', async e => {
       e.preventDefault();
