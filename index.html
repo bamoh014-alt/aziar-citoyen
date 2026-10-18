@@ -802,7 +802,7 @@ addTrackingRow('الحالة الحالية', statuses[item.status] || item.stat
 addTrackingRow('تاريخ التسجيل', date);
 
 if (item.status_comment && item.status_comment.trim() !== '') {
-  addTrackingRow('تعليق الإدارة', item.status_comment);
+addTrackingRow('تعليق الإدارة', item.status_comment, false, 'tracking-comment-row');
 }
 
 out.style.display = 'none';
