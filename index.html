@@ -439,18 +439,40 @@ select option:first-child {
   </div>
 </section>
 
+
 <section id="suggestion" class="section">
-  <a href="#" class="home-return" data-go="home">🏠 الرجوع للصفحة الرئيسية</a>    <h2 class="section-title">الآراء والاقتراحات</h2>
-    <div class="panel">
-      <form data-kind="اقتراح">
-        <label>الموضوع</label><select name="category" required><option value="">اختار الموضوع</option><option>تجهيزات وبنيات تحتية</option><option>خدمات إدارية</option><option>البيئة والنظافة</option><option>الأنشطة الثقافية والرياضية</option><option>اقتراح مشروع</option><option>موضوع آخر</option></select>
-        <label>الدوار (اختياري)</label><input name="place" placeholder="اسم الدوار">
-        <label>الرأي أو الاقتراح</label><textarea name="details" required minlength="10" placeholder="شاركنا الفكرة ديالك..."></textarea>
-        <label>وسيلة تواصل (اختيارية)</label><input name="contact" placeholder="رقم هاتف أو بريد إلكتروني">
-        <button class="btn primary" type="submit">إرسال الاقتراح التجريبي</button><div class="success" role="status"></div>
-      </form>
-    </div>
-  </section>
+  <a href="#" class="home-return" data-go="home" data-i18n="homeReturn">🏠 الرجوع للصفحة الرئيسية</a>
+
+  <h2 class="section-title" data-i18n="suggestionTitle">الآراء والاقتراحات</h2>
+
+  <div class="panel">
+    <form data-kind="اقتراح">
+      <label data-i18n="suggestionSubject">الموضوع</label>
+      <select name="category" required>
+        <option value="" data-i18n="suggestionSubjectPlaceholder">اختار الموضوع</option>
+        <option value="تجهيزات وبنيات تحتية" data-i18n="suggestionInfrastructure">تجهيزات وبنيات تحتية</option>
+        <option value="خدمات إدارية" data-i18n="suggestionAdmin">خدمات إدارية</option>
+        <option value="البيئة والنظافة" data-i18n="suggestionEnvironment">البيئة والنظافة</option>
+        <option value="الأنشطة الثقافية والرياضية" data-i18n="suggestionActivities">الأنشطة الثقافية والرياضية</option>
+        <option value="اقتراح مشروع" data-i18n="suggestionProject">اقتراح مشروع</option>
+        <option value="موضوع آخر" data-i18n="suggestionOther">موضوع آخر</option>
+      </select>
+
+      <label data-i18n="suggestionDouar">الدوار (اختياري)</label>
+      <input name="place" data-i18n-placeholder="suggestionDouarPlaceholder" placeholder="اسم الدوار">
+
+      <label data-i18n="suggestionDetails">الرأي أو الاقتراح</label>
+      <textarea name="details" required minlength="10" data-i18n-placeholder="suggestionDetailsPlaceholder" placeholder="شاركنا الفكرة ديالك..."></textarea>
+
+      <label data-i18n="suggestionContact">وسيلة تواصل (اختيارية)</label>
+      <input name="contact" data-i18n-placeholder="suggestionContactPlaceholder" placeholder="رقم هاتف أو بريد إلكتروني">
+
+      <button class="btn primary" type="submit" data-i18n="suggestionSubmit">إرسال الاقتراح التجريبي</button>
+      <div class="success" role="status"></div>
+    </form>
+  </div>
+</section>
+
 
 <section id="request" class="section">
   <a href="#" class="home-return" data-go="home">🏠 الرجوع للصفحة الرئيسية</a>    <h2 class="section-title">طلب أو استفسار إداري</h2>
