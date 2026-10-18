@@ -936,6 +936,16 @@ document.querySelectorAll('[data-i18n-aria-label]').forEach(element => {
 
   const sections = [...document.querySelectorAll('.section')];
 
+  const lastSection = localStorage.getItem('aziar_last_section');
+
+if (lastSection && sections.some(s => s.id === lastSection)) {
+  sections.forEach(s => s.classList.toggle('active', s.id === lastSection));
+
+  document.querySelectorAll('.nav button').forEach(b =>
+    b.classList.toggle('active', b.dataset.section === lastSection)
+  );
+}
+
 function showSection(id) {
   sections.forEach(s =>
     s.classList.toggle('active', s.id === id)
