@@ -421,7 +421,12 @@ function resetInactivityTimer() {
   resolved: 'تمت المعالجة',
   rejected: 'مرفوض'
 };
+
+let currentRecord = null;
+
 function showRecordDetails(record) {
+  currentRecord = record;
+
   document.getElementById('detailReference').textContent =
     record.reference_code || '—';
 
@@ -445,50 +450,55 @@ function showRecordDetails(record) {
 
   document.getElementById('detailStatus').textContent =
     STATUS_LABELS[record.status] || record.status || '—';
+
   document.getElementById('statusCommentInput').value =
     record.status_comment || '';
 
-document.getElementById('statusCommentMessage').textContent = '';
+  document.getElementById('statusCommentMessage').textContent = '';
 
   document.getElementById('detailsModal').classList.remove('hidden');
 }
 
 document.getElementById('closeDetailsModal').addEventListener('click', () => {
   document.getElementById('detailsModal').classList.add('hidden');
+});
 
-  
 document.getElementById('saveStatusCommentButton').addEventListener('click', async () => {
   const input = document.getElementById('statusCommentInput');
   const message = document.getElementById('statusCommentMessage');
   const comment = input.value.trim();
+  const button = document.getElementById('saveStatusCommentButton');
 
   if (!currentRecord) {
     message.textContent = 'تعذر تحديد الطلب.';
     return;
   }
 
-  const button = document.getElementById('saveStatusCommentButton');
   button.disabled = true;
   message.textContent = 'جاري حفظ التعليق...';
 
-  const { error } = await client
-    .from('citizen_submissions')
-    .update({ status_comment: comment || null })
-    .eq('id', currentRecord.id);
+  try {
+    const { error } = await client
+      .from('citizen_submissions')
+      .update({ status_comment: comment || null })
+      .eq('id', currentRecord.id);
 
-  button.disabled = false;
+    if (error) {
+      message.textContent = 'فشل حفظ التعليق: ' + error.message;
+      console.error(error);
+      return;
+    }
 
-  if (error) {
-    message.textContent = 'فشل حفظ التعليق: ' + error.message;
+    currentRecord.status_comment = comment;
+    message.textContent = 'تم حفظ التعليق بنجاح.';
+  } catch (error) {
+    message.textContent = 'وقع خطأ أثناء الحفظ. حاول مرة أخرى.';
     console.error(error);
-    return;
+  } finally {
+    button.disabled = false;
   }
-
-  currentRecord.status_comment = comment;
-  message.textContent = 'تم حفظ التعليق بنجاح.';
 });
 
-});
   document.getElementById('printDetailsButton').addEventListener('click', () => {
   const modal = document.getElementById('detailsModal');
   const printWindow = window.open('', '_blank');
