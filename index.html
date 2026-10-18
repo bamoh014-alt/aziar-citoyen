@@ -405,19 +405,39 @@ select option:first-child {
 </section>
 
 
+<section id="com
 <section id="complaint" class="section">
-  <a href="#" class="home-return" data-go="home">🏠 الرجوع للصفحة الرئيسية</a>    <h2 class="section-title">تقديم شكاية أو تبليغ</h2>
-    <div class="panel">
-      <form data-kind="شكاية" id="complaintForm">
-        <label for="c-type">نوع المشكل</label><select id="c-type" name="category" required><option value="">اختار النوع</option><option>الطرق والمسالك</option><option>الإنارة العمومية</option><option>النظافة والنفايات</option><option>الماء أو التطهير</option><option>مرفق جماعي</option><option>أخرى</option></select>
-        <label for="c-douar">الدوار أو المكان</label><input id="c-douar" name="place" placeholder="مثلاً: اسم الدوار أو أقرب معلمة" required>
-        <label for="c-desc">تفاصيل الشكاية</label><textarea id="c-desc" name="details" placeholder="شرح المشكل باختصار وبوضوح..." required minlength="10"></textarea>
-        <label for="c-contact">وسيلة تواصل (اختيارية)</label><input id="c-contact" name="contact" placeholder="رقم هاتف أو بريد إلكتروني (اختياري)">
-        <p class="help">ما تكتبش معلومات حساسة أو معلومات شخصية ديال أشخاص آخرين.</p>
-        <button class="btn primary" type="submit">تسجيل الشكاية التجريبية</button><div class="success" role="status"></div>
-      </form>
-    </div>
-  </section>
+  <a href="#" class="home-return" data-go="home" data-i18n="aboutHomeButton">🏠 الرجوع للصفحة الرئيسية</a>
+  <h2 class="section-title" data-i18n="complaintTitle">تقديم شكاية أو تبليغ</h2>
+  <div class="panel">
+    <form data-kind="شكاية" id="complaintForm">
+      <label for="c-type" data-i18n="complaintTypeLabel">نوع المشكل</label>
+      <select id="c-type" name="category" required>
+        <option value="" data-i18n="complaintTypePlaceholder">اختار النوع</option>
+        <option value="الطرق والمسالك" data-i18n="catRoads">الطرق والمسالك</option>
+        <option value="الإنارة العمومية" data-i18n="catLighting">الإنارة العمومية</option>
+        <option value="النظافة والنفايات" data-i18n="catCleaning">النظافة والنفايات</option>
+        <option value="الماء أو التطهير" data-i18n="catWater">الماء أو التطهير</option>
+        <option value="مرفق جماعي" data-i18n="catFacility">مرفق جماعي</option>
+        <option value="أخرى" data-i18n="catOther">أخرى</option>
+      </select>
+
+      <label for="c-douar" data-i18n="complaintPlaceLabel">الدوار أو المكان</label>
+      <input id="c-douar" name="place" placeholder="مثلاً: اسم الدوار أو أقرب معلمة" data-i18n-placeholder="complaintPlacePlaceholder" required>
+
+      <label for="c-desc" data-i18n="complaintDetailsLabel">تفاصيل الشكاية</label>
+      <textarea id="c-desc" name="details" placeholder="شرح المشكل باختصار وبوضوح..." data-i18n-placeholder="complaintDetailsPlaceholder" required minlength="10"></textarea>
+
+      <label for="c-contact" data-i18n="complaintContactLabel">وسيلة تواصل (اختيارية)</label>
+      <input id="c-contact" name="contact" placeholder="رقم هاتف أو بريد إلكتروني (اختياري)" data-i18n-placeholder="complaintContactPlaceholder">
+
+      <p class="help" data-i18n="complaintPrivacy">ما تكتبش معلومات حساسة أو معلومات شخصية ديال أشخاص آخرين.</p>
+
+      <button class="btn primary" type="submit" data-i18n="complaintSubmit">تسجيل الشكاية التجريبية</button>
+      <div class="success" role="status"></div>
+    </form>
+  </div>
+</section>
 
 <section id="suggestion" class="section">
   <a href="#" class="home-return" data-go="home">🏠 الرجوع للصفحة الرئيسية</a>    <h2 class="section-title">الآراء والاقتراحات</h2>
