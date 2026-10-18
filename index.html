@@ -637,10 +637,24 @@ document.getElementById('trackingForm').addEventListener('submit', async e => {
 
     const result = await response.json();
 
-    if (!Array.isArray(result) || result.length === 0) {
-      out.textContent = 'ما لقيناش طلب مطابق. تأكد من الرقم المرجعي ووسيلة الاتصال.';
-      return;
-    }
+   if (!Array.isArray(result) || result.length === 0) {
+  out.style.display = 'none';
+
+  const modal = document.getElementById('trackingModal');
+  const modalBody = document.getElementById('trackingModalBody');
+
+  modalBody.replaceChildren();
+
+  const message = document.createElement('p');
+  message.textContent = 'ما لقيناش طلب مطابق. تأكد من الرقم المرجعي ووسيلة الاتصال.';
+  message.style.color = '#b91c1c';
+  message.style.fontWeight = 'bold';
+
+  modalBody.appendChild(message);
+  modal.style.display = 'flex';
+
+  return;
+}
 
     const item = result[0];
 
