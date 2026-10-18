@@ -768,9 +768,10 @@ const modalBody = document.getElementById('trackingModalBody');
 
 modalBody.replaceChildren();
 
-function addTrackingRow(label, value, isStatus = false) {
+
+function addTrackingRow(label, value, isStatus = false, rowClass = '') {
   const row = document.createElement('div');
-  row.className = 'tracking-modal-row';
+  row.className = 'tracking-modal-row' + (rowClass ? ' ' + rowClass : '');
 
   const heading = document.createElement('strong');
   heading.textContent = label;
@@ -780,11 +781,20 @@ function addTrackingRow(label, value, isStatus = false) {
 
   if (isStatus) {
     valueElement.className = 'tracking-status';
+
+    if (item.status === 'in_review') {
+      valueElement.classList.add('status-in-review');
+    } else if (item.status === 'resolved') {
+      valueElement.classList.add('status-resolved');
+    } else if (item.status === 'rejected') {
+      valueElement.classList.add('status-rejected');
+    }
   }
 
   row.append(heading, valueElement);
   modalBody.appendChild(row);
 }
+
 
 addTrackingRow('الرقم المرجعي', item.reference_code);
 addTrackingRow('نوع الطلب', types[item.submission_type] || item.submission_type);
