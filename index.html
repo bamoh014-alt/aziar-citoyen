@@ -801,6 +801,12 @@ addTrackingRow('نوع الطلب', types[item.submission_type] || item.submissi
 addTrackingRow('الحالة الحالية', statuses[item.status] || item.status, true);
 addTrackingRow('تاريخ التسجيل', date);
 
+    const statusUpdatedDate = item.status_updated_at
+  ? new Date(item.status_updated_at).toLocaleString('ar-MA')
+  : 'غير متوفر';
+
+addTrackingRow('تاريخ آخر تغيير للحالة', statusUpdatedDate);
+
 if (item.status_comment && item.status_comment.trim() !== '') {
 addTrackingRow('تعليق الإدارة', item.status_comment, false, 'tracking-comment-row');
 }
