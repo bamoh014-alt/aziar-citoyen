@@ -474,17 +474,35 @@ select option:first-child {
 </section>
 
 
+
 <section id="request" class="section">
-  <a href="#" class="home-return" data-go="home">🏠 الرجوع للصفحة الرئيسية</a>    <h2 class="section-title">طلب أو استفسار إداري</h2>
-    <div class="panel">
-      <form data-kind="طلب إداري">
-        <label>نوع الطلب</label><select name="category" required><option value="">اختار النوع</option><option>معلومات حول وثيقة إدارية</option><option>معلومات حول مصلحة جماعية</option><option>موعد أو تواصل مع المصلحة</option><option>طلب معلومات آخر</option></select>
-        <label>تفاصيل الطلب</label><textarea name="details" required minlength="10" placeholder="شرح شنو بغيتي تعرف أو تطلب..."></textarea>
-        <label>وسيلة تواصل (اختيارية)</label><input name="contact" placeholder="رقم هاتف أو بريد إلكتروني">
-        <button class="btn primary" type="submit">تسجيل الطلب التجريبي</button><div class="success" role="status"></div>
-      </form>
-    </div>
-  </section>
+  <a href="#" class="home-return" data-go="home" data-i18n="homeReturn">🏠 الرجوع للصفحة الرئيسية</a>
+
+  <h2 class="section-title" data-i18n="requestTitle">طلب أو استفسار إداري</h2>
+
+  <div class="panel">
+    <form data-kind="طلب إداري">
+      <label data-i18n="requestType">نوع الطلب</label>
+      <select name="category" required>
+        <option value="" data-i18n="requestTypePlaceholder">اختار النوع</option>
+        <option value="معلومات حول وثيقة إدارية" data-i18n="requestDocument">معلومات حول وثيقة إدارية</option>
+        <option value="معلومات حول مصلحة جماعية" data-i18n="requestService">معلومات حول مصلحة جماعية</option>
+        <option value="موعد أو تواصل مع المصلحة" data-i18n="requestAppointment">موعد أو تواصل مع المصلحة</option>
+        <option value="طلب معلومات آخر" data-i18n="requestOther">طلب معلومات آخر</option>
+      </select>
+
+      <label data-i18n="requestDetails">تفاصيل الطلب</label>
+      <textarea name="details" required minlength="10" data-i18n-placeholder="requestDetailsPlaceholder" placeholder="شرح شنو بغيتي تعرف أو تطلب..."></textarea>
+
+      <label data-i18n="requestContact">وسيلة تواصل (اختيارية)</label>
+      <input name="contact" data-i18n-placeholder="requestContactPlaceholder" placeholder="رقم هاتف أو بريد إلكتروني">
+
+      <button class="btn primary" type="submit" data-i18n="requestSubmit">تسجيل الطلب التجريبي</button>
+      <div class="success" role="status"></div>
+    </form>
+  </div>
+</section>
+
 
 <section id="assistant" class="section">
   <a href="#" class="home-return" data-go="home">🏠 الرجوع للصفحة الرئيسية</a>    <h2 class="section-title">المجيب الآلي — أسئلة متكررة</h2>
@@ -706,6 +724,19 @@ suggestionContactPlaceholder: "رقم هاتف أو بريد إلكتروني",
 suggestionSubmit: "إرسال الاقتراح التجريبي",
 homeReturn: "🏠 الرجوع للصفحة الرئيسية",
 
+requestTitle: "طلب أو استفسار إداري",
+requestType: "نوع الطلب",
+requestTypePlaceholder: "اختار النوع",
+requestDocument: "معلومات حول وثيقة إدارية",
+requestService: "معلومات حول مصلحة جماعية",
+requestAppointment: "موعد أو تواصل مع المصلحة",
+requestOther: "طلب معلومات آخر",
+requestDetails: "تفاصيل الطلب",
+requestDetailsPlaceholder: "شرح شنو بغيتي تعرف أو تطلب...",
+requestContact: "وسيلة تواصل (اختيارية)",
+requestContactPlaceholder: "رقم هاتف أو بريد إلكتروني",
+requestSubmit: "تسجيل الطلب التجريبي",
+
 
   },
   fr: {
@@ -783,6 +814,19 @@ suggestionContact: "Moyen de contact (facultatif)",
 suggestionContactPlaceholder: "Téléphone ou adresse e-mail",
 suggestionSubmit: "Envoyer la suggestion de test",
 homeReturn: "🏠 Retour à la page d’accueil",
+
+requestTitle: "Demande ou renseignement administratif",
+requestType: "Type de demande",
+requestTypePlaceholder: "Choisissez un type",
+requestDocument: "Informations sur un document administratif",
+requestService: "Informations sur un service communal",
+requestAppointment: "Rendez-vous ou contact avec le service",
+requestOther: "Autre demande d’information",
+requestDetails: "Détails de la demande",
+requestDetailsPlaceholder: "Expliquez les informations que vous souhaitez obtenir ou votre demande...",
+requestContact: "Moyen de contact (facultatif)",
+requestContactPlaceholder: "Téléphone ou adresse e-mail",
+requestSubmit: "Enregistrer la demande de test",
 
 
   }
