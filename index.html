@@ -1186,13 +1186,23 @@ const statuses = currentLanguage === 'fr'
       rejected: 'تم رفض الطلب'
     };
 
-const types = {
-  complaint: 'شكاية',
-  suggestion: 'اقتراح',
-  request: 'طلب إداري'
-};
 
-const date = new Date(item.created_at).toLocaleDateString('ar-MA');
+const types = currentLanguage === 'fr'
+  ? {
+      complaint: 'Réclamation',
+      suggestion: 'Suggestion',
+      request: 'Demande administrative'
+    }
+  : {
+      complaint: 'شكاية',
+      suggestion: 'اقتراح',
+      request: 'طلب إداري'
+    };
+
+const date = new Date(item.created_at).toLocaleDateString(
+  currentLanguage === 'fr' ? 'fr-FR' : 'ar-MA'
+);
+
 
 const modal = document.getElementById('trackingModal');
 const modalBody = document.getElementById('trackingModalBody');
