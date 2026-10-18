@@ -1003,7 +1003,8 @@ function showSection(id) {
 
      
 if (SUPABASE_URL === 'PASTE_YOUR_PROJECT_URL' ||
-    SUPABASE_KEY === 'PASTE_YOUR_PUBLISHABLE_KEY') {
+    SUPABASE_KEY === 'PASTE_YOUR_PUBLISHABLE_KEY')
+{
   out.style.display = 'block';
   out.textContent = 'خاص إعداد رابط Supabase والمفتاح العمومي قبل إرسال الطلبات.';
   return;
@@ -1210,6 +1211,7 @@ const modalBody = document.getElementById('trackingModalBody');
 modalBody.replaceChildren();
 
 
+
 function addTrackingRow(label, value, isStatus = false, rowClass = '') {
   const row = document.createElement('div');
   row.className = 'tracking-modal-row' + (rowClass ? ' ' + rowClass : '');
@@ -1218,7 +1220,7 @@ function addTrackingRow(label, value, isStatus = false, rowClass = '') {
   heading.textContent = label;
 
   const valueElement = document.createElement('span');
-  valueElement.textContent = value || 'غير متوفر';
+  valueElement.textContent = value || (currentLanguage === 'fr' ? 'Non disponible' : 'غير متوفر');
 
   if (isStatus) {
     valueElement.className = 'tracking-status';
@@ -1236,21 +1238,41 @@ function addTrackingRow(label, value, isStatus = false, rowClass = '') {
   modalBody.appendChild(row);
 }
 
+const labels = currentLanguage === 'fr'
+  ? {
+      reference: 'Numéro de référence',
+      type: 'Type de demande',
+      status: 'Statut actuel',
+      created: 'Date de création',
+      updated: 'Date du dernier changement de statut',
+      comment: 'Commentaire de l’administration'
+    }
+  : {
+      reference: 'الرقم المرجعي',
+      type: 'نوع الطلب',
+      status: 'الحالة الحالية',
+      created: 'تاريخ التسجيل',
+      updated: 'تاريخ آخر تغيير للحالة',
+      comment: 'تعليق الإدارة'
+    };
 
-addTrackingRow('الرقم المرجعي', item.reference_code);
-addTrackingRow('نوع الطلب', types[item.submission_type] || item.submission_type);
-addTrackingRow('الحالة الحالية', statuses[item.status] || item.status, true);
-addTrackingRow('تاريخ التسجيل', date);
+addTrackingRow(labels.reference, item.reference_code);
+addTrackingRow(labels.type, types[item.submission_type] || item.submission_type);
+addTrackingRow(labels.status, statuses[item.status] || item.status, true);
+addTrackingRow(labels.created, date);
 
-    const statusUpdatedDate = item.status_updated_at
-  ? new Date(item.status_updated_at).toLocaleString('ar-MA')
-  : 'غير متوفر';
+const statusUpdatedDate = item.status_updated_at
+  ? new Date(item.status_updated_at).toLocaleString(
+      currentLanguage === 'fr' ? 'fr-FR' : 'ar-MA'
+    )
+  : (currentLanguage === 'fr' ? 'Non disponible' : 'غير متوفر');
 
-addTrackingRow('تاريخ آخر تغيير للحالة', statusUpdatedDate);
+addTrackingRow(labels.updated, statusUpdatedDate);
 
 if (item.status_comment && item.status_comment.trim() !== '') {
-addTrackingRow('تعليق الإدارة', item.status_comment, false, 'tracking-comment-row');
+  addTrackingRow(labels.comment, item.status_comment, false, 'tracking-comment-row');
 }
+
 
 out.style.display = 'none';
 modal.style.display = 'flex';
