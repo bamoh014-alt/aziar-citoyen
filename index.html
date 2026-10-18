@@ -1299,20 +1299,51 @@ const answers=[
   }
 ];
 
-  function ask(q){
-const normalized = q
-  .toLowerCase()
-  .normalize('NFD')
-  .replace(/[\u064B-\u065F\u0670]/g, '')
-  .replace(/[أإآ]/g, 'ا')
-  .replace(/ى/g, 'ي')
-  .replace(/[؟?!،,.]/g, ' ')
-  .replace(/\s+/g, ' ')
-  .trim();
-const found=answers.find(a=>a.keys.some(k=>normalized.includes(k)));return found?found.answer:'سمح ليا، ما عنديش جواب موثوق على هاد السؤال دابا. خاص نضيفو معلومات رسمية مصادق عليها، أو نوجهوك للمصلحة المختصة فالجماعة.'}
-  function addBubble(text,who){const b=document.createElement('div');b.className='bubble '+who;b.textContent=text;document.getElementById('chat').append(b);document.getElementById('chat').scrollTop=document.getElementById('chat').scrollHeight}
-  document.getElementById('chatForm').addEventListener('submit',e=>{e.preventDefault();const input=document.getElementById('chatInput'),q=input.value.trim();if(!q)return;addBubble(q,'user');addBubble(ask(q),'bot');input.value=''});
-  document.querySelectorAll('[data-question]').forEach(b=>b.addEventListener('click',()=>{showSection('assistant');addBubble(b.dataset.question,'user');addBubble(ask(b.dataset.question),'bot')}));
-</script>
-</body>
-</html>
+  
+function ask(q) {
+  const normalized = q
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[\u064B-\u065F\u0670]/g, '')
+    .replace(/[أإآ]/g, 'ا')
+    .replace(/ى/g, 'ي')
+    .replace(/[؟?!،,.]/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+
+  const found = answers.find(a =>
+    a.keys.some(k => normalized.includes(
+      k.toLowerCase()
+        .normalize('NFD')
+        .replace(/[\u064B-\u065F\u0670]/g, '')
+        .replace(/[أإآ]/g, 'ا')
+        .replace(/ى/g, 'ي')
+    ))
+  );
+
+  if (!found) {
+    return currentLanguage === 'fr'
+      ? "Désolé, je ne dispose pas encore d’une réponse fiable à cette question. Veuillez contacter le service compétent de la commune."
+      : "سمح ليا، ما عنديش جواب موثوق على هاد السؤال دابا. خاص نضيفو معلومات رسمية مصادق عليها، أو نوجهوك للمصلحة المختصة فالجماعة.";
+  }
+
+  if (currentLanguage !== 'fr') {
+    return found.answer;
+  }
+
+  const frenchAnswers = {
+    hours: "Les horaires habituels sont du lundi au vendredi, de 8 h 30 à 16 h 30.",
+    complaint: "Choisissez « Réclamation ou signalement », précisez le type de problème et le lieu, décrivez la situation, puis envoyez votre réclamation. Conservez le numéro de référence affiché pour suivre votre dossier.",
+    tracking: "Ouvrez la rubrique « Suivi des dossiers », puis saisissez votre numéro de référence et le numéro de téléphone utilisé lors de l’enregistrement pour consulter l’état de votre demande.",
+    documents: "Désolé, ce service est actuellement en cours de développement. Il sera disponible prochainement. Merci de votre compréhension.",
+    location: "La commune d’Aziar relève du caïdat d’Imouzzer, dans la préfecture d’Agadir Ida-Outanane, région de Souss-Massa.",
+    suggestion: "Choisissez « Avis ou suggestion », sélectionnez le sujet et décrivez votre idée. La suggestion pourra être examinée par les services concernés.",
+    greeting: "Bonjour et bienvenue ! Quelle information souhaitez-vous obtenir ?"
+  };
+
+  const index = answers.indexOf(found);
+
+  return frenchAnswers[
+    ['hours', 'complaint', 'tracking', 'documents', 'location', 'suggestion', 'greeting'][index]
+  ] || "Merci pour votre question. Veuillez contacter le service compétent de la commune.";
+}
