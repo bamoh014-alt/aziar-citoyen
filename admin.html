@@ -957,6 +957,7 @@ client = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY, {
     document.getElementById('refreshButton').addEventListener('click', loadRecords);
     document.getElementById('search').addEventListener('input', renderRecords);
     document.getElementById('filter').addEventListener('change', renderRecords);
+        document.getElementById('exportExcelButton').addEventListener('click', exportRecordsToExcel);
 
     await updateScreen();
   }
