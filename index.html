@@ -220,14 +220,62 @@ select option:first-child {
   font-weight: 700;
 }
 
+
 .tracking-status {
   display: inline-block !important;
   width: fit-content;
-  padding: 4px 12px;
+  max-width: 100%;
+  padding: 5px 14px;
   border-radius: 20px;
-  background: #ecfdf5;
-  color: #065f46 !important;
+  background: #ffedd5;
+  color: #9a3412 !important;
+  border: 1px solid #fed7aa;
 }
+
+/* الحالة: قيد المعالجة */
+.tracking-status.status-in-review {
+  background: #dbeafe;
+  color: #1d4ed8 !important;
+  border-color: #bfdbfe;
+}
+
+/* الحالة: تمت المعالجة */
+.tracking-status.status-resolved {
+  background: #dcfce7;
+  color: #166534 !important;
+  border-color: #bbf7d0;
+}
+
+/* الحالة: مرفوض */
+.tracking-status.status-rejected {
+  background: #fee2e2;
+  color: #b91c1c !important;
+  border-color: #fecaca;
+}
+
+/* تعليق الإدارة */
+.tracking-comment-row {
+  background: #f0fdfa;
+  border: 1px solid #99f6e4;
+  border-right: 4px solid #0f766e;
+  border-radius: 12px;
+  padding: 14px;
+  margin: 12px 0;
+}
+
+.tracking-comment-row strong {
+  color: #0f766e !important;
+  font-size: 14px;
+  margin-bottom: 6px;
+}
+
+.tracking-comment-row span {
+  color: #134e4a !important;
+  font-weight: 500;
+  white-space: pre-wrap;
+  line-height: 1.9;
+}
+
 
 .tracking-modal-ok {
   width: 100%;
