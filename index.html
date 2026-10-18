@@ -1118,8 +1118,9 @@ const spinner = document.createElement('div');
 spinner.className = 'tracking-spinner';
 
 const loadingText = document.createElement('p');
-loadingText.textContent = 'جاري البحث عن الطلب...';
-
+loadingText.textContent = currentLanguage === 'fr'
+  ? 'Recherche de votre demande en cours...'
+  : 'جاري البحث عن الطلب...';
 loadingContainer.append(spinner, loadingText);
 loadingBody.appendChild(loadingContainer);
 
@@ -1157,8 +1158,9 @@ loadingModal.style.display = 'flex';
   modalBody.replaceChildren();
 
   const message = document.createElement('p');
-  message.textContent = 'ما لقيناش طلب مطابق. تأكد من الرقم المرجعي ووسيلة الاتصال.';
-  message.style.color = '#b91c1c';
+message.textContent = currentLanguage === 'fr'
+  ? 'Aucune demande correspondante trouvée. Vérifiez le numéro de référence et les coordonnées de contact.'
+  : 'ما لقيناش طلب مطابق. تأكد من الرقم المرجعي ووسيلة الاتصال.';  message.style.color = '#b91c1c';
      message.style.textAlign = 'center';
   message.style.fontWeight = 'bold';
 
@@ -1170,12 +1172,19 @@ loadingModal.style.display = 'flex';
 
     const item = result[0];
 
-const statuses = {
-  received: 'تم استلام الطلب',
-  in_review: 'الطلب قيد المعالجة',
-  resolved: 'تمت معالجة الطلب',
-  rejected: 'تم رفض الطلب'
-};
+const statuses = currentLanguage === 'fr'
+  ? {
+      received: 'Demande reçue',
+      in_review: 'Demande en cours de traitement',
+      resolved: 'Demande traitée',
+      rejected: 'Demande rejetée'
+    }
+  : {
+      received: 'تم استلام الطلب',
+      in_review: 'الطلب قيد المعالجة',
+      resolved: 'تمت معالجة الطلب',
+      rejected: 'تم رفض الطلب'
+    };
 
 const types = {
   complaint: 'شكاية',
