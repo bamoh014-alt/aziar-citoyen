@@ -504,24 +504,40 @@ select option:first-child {
 </section>
 
 
+
 <section id="assistant" class="section">
-  <a href="#" class="home-return" data-go="home">🏠 الرجوع للصفحة الرئيسية</a>    <h2 class="section-title">المجيب الآلي — أسئلة متكررة</h2>
-    <div class="grid">
-      <div class="panel">
-        <p class="muted">كتب السؤال ديالك بالدارجة أو العربية. هاد النسخة كتجاوب غير على مجموعة أسئلة معدّة مسبقاً، وماشي ذكاء اصطناعي متصل بالإنترنت.</p>
-        <div class="chat" id="chat" aria-live="polite"><div class="bubble bot">السلام عليكم! أنا المجيب الآلي التجريبي ديال جماعة أزيار. نقدر نعاونك بمعلومات عامة. شنو بغيتي تعرف؟</div></div>
-        <form id="chatForm" class="chatrow"><input id="chatInput" aria-label="اكتب سؤالك" placeholder="مثلاً: أوقات العمل" required><button class="btn primary" style="margin:0" type="submit">إرسال</button></form>
+  <a href="#" class="home-return" data-go="home" data-i18n="homeReturn">🏠 الرجوع للصفحة الرئيسية</a>
+
+  <h2 class="section-title" data-i18n="assistantTitle">المجيب الآلي — أسئلة متكررة</h2>
+
+  <div class="grid">
+    <div class="panel">
+      <p class="muted" data-i18n="assistantIntro">كتب السؤال ديالك بالدارجة أو العربية. هاد النسخة كتجاوب غير على مجموعة أسئلة معدّة مسبقاً، وماشي ذكاء اصطناعي متصل بالإنترنت.</p>
+
+      <div class="chat" id="chat" aria-live="polite">
+        <div class="bubble bot" data-i18n="assistantWelcome">السلام عليكم! أنا المجيب الآلي التجريبي ديال جماعة أزيار. نقدر نعاونك بمعلومات عامة. شنو بغيتي تعرف؟</div>
       </div>
-      <div class="panel faq"><h3>أسئلة مقترحة</h3>
-        <button type="button" data-question="شنو أوقات العمل ديال الجماعة؟">شنو أوقات العمل ديال الجماعة؟</button>
-        <button type="button" data-question="كيفاش نقدم شكاية؟">كيفاش نقدم شكاية؟</button>
-        <button type="button" data-question="كيفاش نتبع الشكاية؟">كيفاش نتبع الشكاية؟</button>
-        <button type="button" data-question="شنو الوثائق المطلوبة؟">شنو الوثائق المطلوبة؟</button>
-        <button type="button" data-question="فين كاينة الجماعة؟">فين كاينة الجماعة؟</button>
-        <p class="help">خاص إدارة الجماعة تصادق على الأجوبة والعناوين وأوقات العمل قبل النشر الرسمي.</p>
-      </div>
+
+      <form id="chatForm" class="chatrow">
+        <input id="chatInput" aria-label="اكتب سؤالك" data-i18n-placeholder="assistantInputPlaceholder" data-i18n-aria-label="assistantInputLabel" placeholder="مثلاً: أوقات العمل" required>
+        <button class="btn primary" style="margin:0" type="submit" data-i18n="assistantSend">إرسال</button>
+      </form>
     </div>
-  </section>
+
+    <div class="panel faq">
+      <h3 data-i18n="assistantFaqTitle">أسئلة مقترحة</h3>
+
+      <button type="button" data-question="شنو أوقات العمل ديال الجماعة؟" data-i18n="assistantQuestionHours">شنو أوقات العمل ديال الجماعة؟</button>
+      <button type="button" data-question="كيفاش نقدم شكاية؟" data-i18n="assistantQuestionComplaint">كيفاش نقدم شكاية؟</button>
+      <button type="button" data-question="كيفاش نتبع الشكاية؟" data-i18n="assistantQuestionTracking">كيفاش نتبع الشكاية؟</button>
+      <button type="button" data-question="شنو الوثائق المطلوبة؟" data-i18n="assistantQuestionDocuments">شنو الوثائق المطلوبة؟</button>
+      <button type="button" data-question="فين كاينة الجماعة؟" data-i18n="assistantQuestionLocation">فين كاينة الجماعة؟</button>
+
+      <p class="help" data-i18n="assistantNotice">خاص إدارة الجماعة تصادق على الأجوبة والعناوين وأوقات العمل قبل النشر الرسمي.</p>
+    </div>
+  </div>
+</section>
+
 
  
 
@@ -751,6 +767,21 @@ trackingContact: "وسيلة الاتصال",
 trackingContactPlaceholder: "نفس الهاتف أو البريد المسجل",
 trackingSearch: "البحث عن الطلب",
 
+assistantTitle: "المجيب الآلي — أسئلة متكررة",
+assistantIntro: "كتب السؤال ديالك بالدارجة أو العربية. هاد النسخة كتجاوب غير على مجموعة أسئلة معدّة مسبقاً، وماشي ذكاء اصطناعي متصل بالإنترنت.",
+assistantWelcome: "السلام عليكم! أنا المجيب الآلي التجريبي ديال جماعة أزيار. نقدر نعاونك بمعلومات عامة. شنو بغيتي تعرف؟",
+assistantInputLabel: "اكتب سؤالك",
+assistantInputPlaceholder: "مثلاً: أوقات العمل",
+assistantSend: "إرسال",
+assistantFaqTitle: "أسئلة مقترحة",
+assistantQuestionHours: "شنو أوقات العمل ديال الجماعة؟",
+assistantQuestionComplaint: "كيفاش نقدم شكاية؟",
+assistantQuestionTracking: "كيفاش نتبع الشكاية؟",
+assistantQuestionDocuments: "شنو الوثائق المطلوبة؟",
+assistantQuestionLocation: "فين كاينة الجماعة؟",
+assistantNotice: "خاص إدارة الجماعة تصادق على الأجوبة والعناوين وأوقات العمل قبل النشر الرسمي.",
+homeReturn: "🏠 الرجوع للصفحة الرئيسية",
+
 
   },
   fr: {
@@ -849,6 +880,21 @@ trackingReferencePlaceholder: "Exemple : AZ-7336C948",
 trackingContact: "Moyen de contact",
 trackingContactPlaceholder: "Le même numéro de téléphone ou la même adresse e-mail enregistrée",
 trackingSearch: "Rechercher la demande",
+
+assistantTitle: "Assistant automatique — Questions fréquentes",
+assistantIntro: "Posez votre question en darija ou en arabe. Cette version répond uniquement à une liste de questions prédéfinies. Ce n’est pas une intelligence artificielle connectée à Internet.",
+assistantWelcome: "Bonjour ! Je suis l’assistant automatique expérimental de la Commune d’Aziar. Je peux vous aider avec des informations générales. Que souhaitez-vous savoir ?",
+assistantInputLabel: "Écrivez votre question",
+assistantInputPlaceholder: "Exemple : horaires de travail",
+assistantSend: "Envoyer",
+assistantFaqTitle: "Questions suggérées",
+assistantQuestionHours: "Quels sont les horaires de travail de la commune ?",
+assistantQuestionComplaint: "Comment déposer une réclamation ?",
+assistantQuestionTracking: "Comment suivre une réclamation ?",
+assistantQuestionDocuments: "Quels sont les documents requis ?",
+assistantQuestionLocation: "Où se trouve la commune ?",
+assistantNotice: "L’administration de la commune doit valider les réponses, les adresses et les horaires avant la publication officielle.",
+homeReturn: "🏠 Retour à la page d’accueil",
 
 
   }
