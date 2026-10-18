@@ -569,6 +569,54 @@ select option:first-child {
 </main>
 <footer>جماعة أزيار الرقمية — نموذج أولي تجريبي، غير معتمد رسمياً بعد.</footer>
 <script>
+  
+  let currentLanguage = 'ar';
+
+  const translations = {
+    ar: {
+      navHome: 'الرئيسية',
+      navComplaint: 'شكاية أو تبليغ',
+      navSuggestion: 'رأي أو اقتراح',
+      navRequest: 'طلب إداري',
+      navAssistant: 'المجيب الآلي',
+      navTracking: 'تتبع الملفات',
+      navAbout: 'معلومات عنا',
+      navAdmin: '🔐 فضاء الإدارة'
+    },
+    fr: {
+      navHome: 'Accueil',
+      navComplaint: 'Réclamation ou signalement',
+      navSuggestion: 'Avis ou suggestion',
+      navRequest: 'Demande administrative',
+      navAssistant: 'Assistant automatique',
+      navTracking: 'Suivi des dossiers',
+      navAbout: 'À propos',
+      navAdmin: '🔐 Espace administration'
+    }
+  };
+
+  function applyLanguage() {
+    document.documentElement.lang = currentLanguage;
+    document.documentElement.dir = currentLanguage === 'ar' ? 'rtl' : 'ltr';
+
+    document.querySelectorAll('[data-i18n]').forEach(element => {
+      const key = element.dataset.i18n;
+      const translation = translations[currentLanguage][key];
+      if (translation) element.textContent = translation;
+    });
+
+    const languageButton = document.getElementById('languageToggle');
+    if (languageButton) {
+      languageButton.textContent =
+        currentLanguage === 'ar' ? '🇫🇷 Français' : '🇲🇦 العربية';
+    }
+  }
+
+  document.getElementById('languageToggle')?.addEventListener('click', () => {
+    currentLanguage = currentLanguage === 'ar' ? 'fr' : 'ar';
+    applyLanguage();
+  });
+
   const sections = [...document.querySelectorAll('.section')];
 function showSection(id) {
   sections.forEach(s =>
