@@ -515,64 +515,74 @@ select option:first-child {
   </div>
 </div>
 
+
 <section id="about" class="section">
 <div class="panel" style="text-align: center;">
-  <h2>حول جماعة أزيار</h2>
-  
-  <h3>التعريف بالجماعة</h3>
-    <p>
-      مرحباً بكم في الفضاء الرقمي لجماعة أزيار،
-      منصة للتواصل وتقريب الخدمات الإدارية من المواطنات والمواطنين.
-    </p>
-  
-<h3>موقع مقر الجماعة</h3>
 
-<p>يمكنكم الاطلاع على موقع مقر جماعة أزيار عبر الخريطة التالية:</p>
+  <h2 data-i18n="aboutTitle">حول جماعة أزيار</h2>
 
-<div style="width:100%; max-width:700px; margin:20px auto;">
-  <iframe
-    src="https://www.google.com/maps?q=QCCR%2BRRW%2C+Aziar%2C+Morocco&output=embed"
-    width="100%"
-    height="350"
-    style="border:0; border-radius:14px;"
-    loading="lazy"
-    allowfullscreen
-    referrerpolicy="no-referrer-when-downgrade">
-  </iframe>
-</div>
+  <h3 data-i18n="aboutIntroTitle">التعريف بالجماعة</h3>
+  <p data-i18n="aboutIntroText">
+    مرحباً بكم في الفضاء الرقمي لجماعة أزيار،
+    منصة للتواصل وتقريب الخدمات الإدارية من المواطنات والمواطنين.
+  </p>
 
-<a
-  href="https://www.google.com/maps/search/?api=1&query=QCCR%2BRRW%2C+Aziar%2C+Morocco"
-  target="_blank"
-  rel="noopener noreferrer"
-  class="btn primary"
-  style="display:inline-block; text-decoration:none; margin:10px auto;">
-  📍 فتح الموقع والاتجاهات عبر Google Maps
-</a>
+  <h3 data-i18n="aboutLocationTitle">موقع مقر الجماعة</h3>
 
-    <p>
-      تقع جماعة أزيار ضمن قيادة إيموزار، التابعة لعمالة
-      أكادير إداوتنان بجهة سوس ماسة, وقد تأسست سنة 1994.
-    </p>
+  <p data-i18n="aboutMapText">
+    يمكنكم الاطلاع على موقع مقر جماعة أزيار عبر الخريطة التالية:
+  </p>
 
-    <h3>أهداف الفضاء الرقمي</h3>
-    <ul>
-      <p>تسهيل التواصل بين المواطنين والجماعة.</p>
-      <p>استقبال الشكايات والطلبات والاقتراحات.</p>
-      <p>تمكين المواطنين من تتبع طلباتهم.</p>
-      <p>المساهمة في تحسين جودة الخدمات والتواصل.</p>
-    </ul>
-
-    <button class="btn primary" type="button"
-      onclick="showSection('home')">
-      الرجوع إلى الصفحة الرئيسية
-    </button>
+  <div style="width:100%; max-width:700px; margin:20px auto;">
+    <iframe
+      src="https://www.google.com/maps?q=QCCR%2BRRW%2C+Aziar%2C+Morocco&output=embed"
+      width="100%"
+      height="350"
+      style="border:0; border-radius:14px;"
+      loading="lazy"
+      allowfullscreen
+      referrerpolicy="no-referrer-when-downgrade">
+    </iframe>
   </div>
-</section>
 
+  <a
+    href="https://www.google.com/maps/search/?api=1&query=QCCR%2BRRW%2C+Aziar%2C+Morocco"
+    target="_blank"
+    rel="noopener noreferrer"
+    class="btn primary"
+    style="display:inline-block; text-decoration:none; margin:10px auto;"
+    data-i18n="aboutMapButton">
+    📍 فتح الموقع والاتجاهات عبر Google Maps
+  </a>
+
+  <p data-i18n="aboutHistoryText">
+    تقع جماعة أزيار ضمن قيادة إيموزار، التابعة لعمالة أكادير إداوتنان بجهة سوس ماسة، وقد تأسست سنة 1994.
+  </p>
+
+  <h3 data-i18n="aboutGoalsTitle">أهداف الفضاء الرقمي</h3>
+
+  <ul style="list-style-position: inside;">
+    <li data-i18n="aboutGoal1">تسهيل التواصل بين المواطنين والجماعة.</li>
+    <li data-i18n="aboutGoal2">استقبال الشكايات والطلبات والاقتراحات.</li>
+    <li data-i18n="aboutGoal3">تمكين المواطنين من تتبع طلباتهم.</li>
+    <li data-i18n="aboutGoal4">المساهمة في تحسين جودة الخدمات والتواصل.</li>
+  </ul>
+
+  <button class="btn primary" type="button"
+    onclick="showSection('home')"
+    data-i18n="aboutHomeButton">
+    الرجوع إلى الصفحة الرئيسية
+  </button>
+
+</div>
+</section>
 </main>
-<footer>جماعة أزيار الرقمية — نموذج أولي تجريبي، غير معتمد رسمياً بعد.</footer>
+
+<footer data-i18n="footerText">
+  جماعة أزيار الرقمية — نموذج أولي تجريبي، غير معتمد رسمياً بعد.
+</footer>
 <script>
+
   
   let currentLanguage = 'ar';
 
