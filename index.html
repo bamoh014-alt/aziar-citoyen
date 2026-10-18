@@ -610,21 +610,52 @@ document.getElementById('trackingForm').addEventListener('submit', async e => {
     }
 
     const item = result[0];
-    const statuses = {
-      received: 'تم استلام الطلب',
-      in_review: 'الطلب قيد المعالجة',
-      resolved: 'تمت معالجة الطلب',
-      rejected: 'تم رفض الطلب'
-    };
 
-    const date = new Date(item.created_at).toLocaleDateString('ar-MA');
+const statuses = {
+  received: 'تم استلام الطلب',
+  in_review: 'الطلب قيد المعالجة',
+  resolved: 'تمت معالجة الطلب',
+  rejected: 'تم رفض الطلب'
+};
 
-    out.textContent =
-      'الرقم المرجعي: ' + item.reference_code +
-      '\nنوع الطلب: ' + item.submission_type +
-      '\nالحالة: ' + (statuses[item.status] || item.status) +
-      '\nتاريخ التسجيل: ' + date;
+const types = {
+  complaint: 'شكاية',
+  suggestion: 'اقتراح',
+  request: 'طلب إداري'
+};
 
+const date = new Date(item.created_at).toLocaleDateString('ar-MA');
+
+const modal = document.getElementById('trackingModal');
+const modalBody = document.getElementById('trackingModalBody');
+
+modalBody.replaceChildren();
+
+function addTrackingRow(label, value, isStatus = false) {
+  const row = document.createElement('div');
+  row.className = 'tracking-modal-row';
+
+  const heading = document.createElement('strong');
+  heading.textContent = label;
+
+  const valueElement = document.createElement('span');
+  valueElement.textContent = value || 'غير متوفر';
+
+  if (isStatus) {
+    valueElement.className = 'tracking-status';
+  }
+
+  row.append(heading, valueElement);
+  modalBody.appendChild(row);
+}
+
+addTrackingRow('الرقم المرجعي', item.reference_code);
+addTrackingRow('نوع الطلب', types[item.submission_type] || item.submission_type);
+addTrackingRow('الحالة الحالية', statuses[item.status] || item.status, true);
+addTrackingRow('تاريخ التسجيل', date);
+
+out.style.display = 'none';
+modal.style.display = 'flex';
   } catch (error) {
     console.error(error);
     out.textContent = error.message || 'تعذر الاتصال بقاعدة البيانات.';
