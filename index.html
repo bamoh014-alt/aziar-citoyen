@@ -581,17 +581,18 @@ select option:first-child {
 </section>
 
 <!-- نافذة نتيجة تتبع الملف -->
+
 <div id="trackingModal" class="tracking-modal" style="display:none;" role="dialog" aria-modal="true" aria-labelledby="trackingModalTitle">
   <div class="tracking-modal-content">
-    <button type="button" id="closeTrackingModal" class="tracking-close" aria-label="إغلاق النافذة">&times;</button>
+    <button type="button" id="closeTrackingModal" class="tracking-close" aria-label="إغلاق النافذة" data-i18n-aria-label="closeWindow">&times;</button>
 
     <div class="tracking-modal-icon">📄</div>
-    <h2 id="trackingModalTitle">نتيجة تتبع الملف</h2>
-    <p class="tracking-modal-subtitle">جماعة أزيار الرقمية</p>
+    <h2 id="trackingModalTitle" data-i18n="trackingResultTitle">نتيجة تتبع الملف</h2>
+    <p class="tracking-modal-subtitle" data-i18n="digitalCommune">جماعة أزيار الرقمية</p>
 
     <div id="trackingModalBody" class="tracking-modal-body"></div>
 
-    <button type="button" id="trackingModalOk" class="btn primary tracking-modal-ok">
+    <button type="button" id="trackingModalOk" class="btn primary tracking-modal-ok" data-i18n="close">
       إغلاق
     </button>
   </div>
