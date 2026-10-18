@@ -916,7 +916,11 @@ document.querySelectorAll('[data-i18n-placeholder]').forEach(element => {
   const translation = translations[currentLanguage][key];
   if (translation) element.placeholder = translation;
 });
-
+document.querySelectorAll('[data-i18n-aria-label]').forEach(element => {
+  const key = element.dataset.i18nAriaLabel;
+  const translation = translations[currentLanguage][key];
+  if (translation) element.setAttribute('aria-label', translation);
+});
 
     const languageButton = document.getElementById('languageToggle');
     if (languageButton) {
