@@ -1300,6 +1300,43 @@ const answers=[
 ];
 
   
+function addBubble(text, who) {
+  const chat = document.getElementById('chat');
+  if (!chat) return;
+
+  const bubble = document.createElement('div');
+  bubble.className = 'bubble ' + who;
+  bubble.textContent = text;
+  chat.appendChild(bubble);
+  chat.scrollTop = chat.scrollHeight;
+}
+
+const chatForm = document.getElementById('chatForm');
+
+if (chatForm) {
+  chatForm.onsubmit = function (e) {
+    e.preventDefault();
+
+    const input = document.getElementById('chatInput');
+    const q = input.value.trim();
+
+    if (!q) return;
+
+    addBubble(q, 'user');
+    addBubble(ask(q), 'bot');
+    input.value = '';
+  };
+}
+
+document.querySelectorAll('[data-question]').forEach(button => {
+  button.onclick = function () {
+    showSection('assistant');
+    addBubble(this.dataset.question, 'user');
+    addBubble(ask(this.dataset.question), 'bot');
+  };
+});
+
+  
 function ask(q) {
   const normalized = q
     .toLowerCase()
