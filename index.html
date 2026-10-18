@@ -524,35 +524,41 @@ select option:first-child {
   </section>
 
  
+
 <section id="tracking" class="section">
-  <a href="#" class="home-return" data-go="home">🏠 الرجوع للصفحة الرئيسية</a>  
-  <h2 class="section-title">تتبع الطلب</h2>
+  <a href="#" class="home-return" data-go="home" data-i18n="homeReturn">🏠 الرجوع للصفحة الرئيسية</a>
+
+  <h2 class="section-title" data-i18n="trackingTitle">تتبع الطلب</h2>
+
   <div class="panel">
-    <p class="muted">
+    <p class="muted" data-i18n="trackingIntro">
       دخل الرقم المرجعي ووسيلة الاتصال اللي سجلتي بها الطلب
       باش تشوف الحالة ديالو.
     </p>
 
     <form id="trackingForm">
-      <label for="trackRef">الرقم المرجعي</label>
+      <label for="trackRef" data-i18n="trackingReference">الرقم المرجعي</label>
       <input
         id="trackRef"
         name="reference"
+        data-i18n-placeholder="trackingReferencePlaceholder"
         placeholder="مثال: AZ-7336C948"
         required
       >
 
-      <label for="trackContact">وسيلة الاتصال</label>
+      <label for="trackContact" data-i18n="trackingContact">وسيلة الاتصال</label>
       <input
         id="trackContact"
         name="contact"
+        data-i18n-placeholder="trackingContactPlaceholder"
         placeholder="نفس الهاتف أو البريد المسجل"
         required
       >
 
-      <button class="btn primary" type="submit">
+      <button class="btn primary" type="submit" data-i18n="trackingSearch">
         البحث عن الطلب
       </button>
+
       <div id="trackingResult" class="success" role="status"></div>
     </form>
   </div>
