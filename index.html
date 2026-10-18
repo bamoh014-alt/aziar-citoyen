@@ -659,9 +659,28 @@ document.getElementById('trackingForm').addEventListener('submit', async e => {
   const out = document.getElementById('trackingResult');
   const button = form.querySelector('[type="submit"]');
 
-  out.style.display = 'block';
-  out.textContent = 'جاري البحث عن الطلب...';
-  button.disabled = true;
+ 
+out.style.display = 'none';
+button.disabled = true;
+
+const loadingModal = document.getElementById('trackingModal');
+const loadingBody = document.getElementById('trackingModalBody');
+
+loadingBody.replaceChildren();
+
+const loadingContainer = document.createElement('div');
+loadingContainer.className = 'tracking-loading';
+
+const spinner = document.createElement('div');
+spinner.className = 'tracking-spinner';
+
+const loadingText = document.createElement('p');
+loadingText.textContent = 'جاري البحث عن الطلب...';
+
+loadingContainer.append(spinner, loadingText);
+loadingBody.appendChild(loadingContainer);
+
+loadingModal.style.display = 'flex';
 
   try {
     const response = await fetch(
