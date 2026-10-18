@@ -442,6 +442,100 @@ function showRecordDetails(record) {
 document.getElementById('closeDetailsModal').addEventListener('click', () => {
   document.getElementById('detailsModal').classList.add('hidden');
 });
+  document.getElementById('printDetailsButton').addEventListener('click', () => {
+  const modal = document.getElementById('detailsModal');
+  const printWindow = window.open('', '_blank');
+
+  if (!printWindow) {
+    alert('المرجو السماح بفتح النوافذ المنبثقة للطباعة.');
+    return;
+  }
+
+  const fields = [
+    ['الرقم المرجعي', 'detailReference'],
+    ['نوع الطلب', 'detailType'],
+    ['الفئة', 'detailCategory'],
+    ['الدوار', 'detailDouar'],
+    ['التفاصيل الكاملة', 'detailDescription'],
+    ['معلومات التواصل', 'detailContact'],
+    ['تاريخ الإرسال', 'detailDate'],
+    ['الحالة الحالية', 'detailStatus']
+  ];
+
+  const rows = fields.map(([label, id]) => {
+    const value = document.getElementById(id).textContent;
+    const safeValue = value.replace(/[&<>"']/g, char => ({
+      '&': '&amp;',
+      '<': '&lt;',
+      '>': '&gt;',
+      '"': '&quot;',
+      "'": '&#39;'
+    })[char]);
+
+    return `<div class="item">
+      <strong>${label}:</strong>
+      <p>${safeValue || '—'}</p>
+    </div>`;
+  }).join('');
+
+  printWindow.document.write(`
+    <!DOCTYPE html>
+    <html lang="ar" dir="rtl">
+    <head>
+      <meta charset="UTF-8">
+      <title>تفاصيل الطلب - جماعة أزيار</title>
+      <style>
+        body {
+          font-family: Tahoma, Arial, sans-serif;
+          direction: rtl;
+          color: #233044;
+          padding: 25px;
+          line-height: 1.9;
+        }
+        h1 {
+          text-align: center;
+          color: #176b50;
+          font-size: 22px;
+        }
+        .subtitle {
+          text-align: center;
+          border-bottom: 2px solid #176b50;
+          padding-bottom: 15px;
+          margin-bottom: 20px;
+        }
+        .item {
+          border: 1px solid #dbe3e8;
+          border-radius: 7px;
+          padding: 8px 12px;
+          margin-bottom: 10px;
+          break-inside: avoid;
+        }
+        .item strong { color: #176b50; }
+        .item p {
+          white-space: pre-wrap;
+          overflow-wrap: anywhere;
+          margin: 4px 0;
+        }
+        @media print {
+          body { padding: 0; }
+        }
+      </style>
+    </head>
+    <body>
+      <h1>جماعة أزيار</h1>
+      <div class="subtitle">تفاصيل الشكاية أو الطلب</div>
+      ${rows}
+      <script>
+        window.onload = function() {
+          window.print();
+        };
+      <\/script>
+    </body>
+    </html>
+  `);
+
+  printWindow.document.close();
+});
 function statusOptions(currentStatus) {
   const statuses = ['received', 'in_review', 'resolved', 'rejected'];
 
