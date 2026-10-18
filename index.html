@@ -748,12 +748,27 @@ addTrackingRow('تاريخ التسجيل', date);
 
 out.style.display = 'none';
 modal.style.display = 'flex';
+ 
   } catch (error) {
     console.error(error);
-    out.textContent = error.message || 'تعذر الاتصال بقاعدة البيانات.';
+
+    const modal = document.getElementById('trackingModal');
+    const modalBody = document.getElementById('trackingModalBody');
+
+    modalBody.replaceChildren();
+
+    const message = document.createElement('p');
+    message.textContent = error.message || 'تعذر الاتصال بقاعدة البيانات.';
+    message.style.color = '#b91c1c';
+    message.style.fontWeight = 'bold';
+    message.style.textAlign = 'center';
+
+    modalBody.appendChild(message);
+    modal.style.display = 'flex';
   } finally {
     button.disabled = false;
   }
+
 });
 
   function renderRecords(){const el=document.getElementById('records'),all=getRecords();el.replaceChildren();if(!all.length){el.textContent='مازال ما تسجّل حتى ملف فهاد المتصفح.';return}
