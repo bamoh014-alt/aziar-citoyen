@@ -445,6 +445,10 @@ function showRecordDetails(record) {
 
   document.getElementById('detailStatus').textContent =
     STATUS_LABELS[record.status] || record.status || '—';
+  document.getElementById('statusCommentInput').value =
+    record.status_comment || '';
+
+document.getElementById('statusCommentMessage').textContent = '';
 
   document.getElementById('detailsModal').classList.remove('hidden');
 }
