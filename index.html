@@ -518,8 +518,8 @@ select option:first-child {
         <div class="bubble bot" data-i18n="assistantWelcome">السلام عليكم! أنا المجيب الآلي التجريبي ديال جماعة أزيار. نقدر نعاونك بمعلومات عامة. شنو بغيتي تعرف؟</div>
       </div>
 
-      <form id="chatForm" class="chatrow">
-        <input id="chatInput" aria-label="اكتب سؤالك" data-i18n-placeholder="assistantInputPlaceholder" data-i18n-aria-label="assistantInputLabel" placeholder="مثلاً: أوقات العمل" required>
+<form id="chatForm" class="chatrow" onsubmit="return false;">
+  <input id="chatInput" aria-label="اكتب سؤالك" data-i18n-placeholder="assistantInputPlaceholder" data-i18n-aria-label="assistantInputLabel" placeholder="مثلاً: أوقات العمل" required>
         <button class="btn primary" style="margin:0" type="submit" data-i18n="assistantSend">إرسال</button>
       </form>
     </div>
