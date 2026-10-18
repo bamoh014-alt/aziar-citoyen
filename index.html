@@ -377,29 +377,31 @@ select option:first-child {
 
 </div>
 <main class="wrap">
-  <section id="home" class="section active">
-    <div class="hero">
-      <div class="panel">
-        <h2>مرحبا بكم في فضاء المواطنين</h2>
-        <p>من هنا تقدر تعبّر على رأيك، تقترح فكرة، تسجل مشكل محلي، أو تسول على معلومات إدارية.</p>
-        <div class="quick">
-          <a href="#" data-go="complaint">📝 تقديم شكاية</a>
-          <a href="#" data-go="suggestion">💡 إرسال اقتراح</a>
-          <a href="#" data-go="request">📄 طلب إداري</a>
-          <a href="#" data-go="assistant">🤖 سؤال وجواب</a>
-        </div>
-      </div>
-      <div class="panel">
-        <h2>كيفاش تستعمل الموقع؟</h2>
-        <p class="muted">اختار الخدمة المناسبة، عمّر المعلومات المطلوبة، ومن بعد احتافظ بالرقم المرجعي اللي غادي يظهر ليك. فهاد النسخة الرقم غير محلي وتجريبي.</p>
-        <div class="stats">
-          <div class="stat"><strong>4</strong><span class="muted">خدمات للمواطن</span></div>
-          <div class="stat"><strong>24/7</strong><span class="muted">ولوج للموقع</span></div>
-          <div class="stat"><strong>0</strong><span class="muted">درهم للتجربة</span></div>
-        </div>
+ 
+<section id="home" class="section active">
+  <div class="hero">
+    <div class="panel">
+      <h2 data-i18n="homeWelcome">مرحبا بكم في فضاء المواطنين</h2>
+      <p data-i18n="homeIntro">من هنا تقدر تعبّر على رأيك، تقترح فكرة، تسجل مشكل محلي، أو تسول على معلومات إدارية.</p>
+      <div class="quick">
+        <a href="#" data-go="complaint" data-i18n="homeComplaint">📝 تقديم شكاية</a>
+        <a href="#" data-go="suggestion" data-i18n="homeSuggestion">💡 إرسال اقتراح</a>
+        <a href="#" data-go="request" data-i18n="homeRequest">📄 طلب إداري</a>
+        <a href="#" data-go="assistant" data-i18n="homeAssistant">🤖 سؤال وجواب</a>
       </div>
     </div>
-  </section>
+    <div class="panel">
+      <h2 data-i18n="homeHow">كيفاش تستعمل الموقع؟</h2>
+      <p class="muted" data-i18n="homeInstructions">اختار الخدمة المناسبة، عمّر المعلومات المطلوبة، ومن بعد احتافظ بالرقم المرجعي اللي غادي يظهر ليك. فهاد النسخة الرقم غير محلي وتجريبي.</p>
+      <div class="stats">
+        <div class="stat"><strong>4</strong><span class="muted" data-i18n="homeServices">خدمات للمواطن</span></div>
+        <div class="stat"><strong>24/7</strong><span class="muted" data-i18n="homeAccess">ولوج للموقع</span></div>
+        <div class="stat"><strong>0</strong><span class="muted" data-i18n="homeFree">درهم للتجربة</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
 
 <section id="complaint" class="section">
   <a href="#" class="home-return" data-go="home">🏠 الرجوع للصفحة الرئيسية</a>    <h2 class="section-title">تقديم شكاية أو تبليغ</h2>
