@@ -428,6 +428,21 @@ select option:first-child {
       <label for="c-desc" data-i18n="complaintDetailsLabel">تفاصيل الشكاية</label>
       <textarea id="c-desc" name="details" placeholder="شرح المشكل باختصار وبوضوح..." data-i18n-placeholder="complaintDetailsPlaceholder" required minlength="10"></textarea>
 
+<label for="c-photo">صورة للمشكل (اختيارية)</label>
+<input
+  id="c-photo"
+  name="photo"
+  type="file"
+  accept="image/jpeg,image/png,image/webp"
+>
+<p class="help">يمكنك إرفاق صورة بصيغة JPG أو PNG أو WebP، بحجم أقصى 3 ميغابايت.</p>
+<img
+  id="c-photo-preview"
+  alt="معاينة الصورة المختارة"
+  style="display:none;max-width:100%;max-height:250px;border-radius:12px;margin-top:10px;"
+>
+<button type="button" id="c-photo-remove" style="display:none;">حذف الصورة</button>
+
       <label for="c-contact" data-i18n="complaintContactLabel">وسيلة تواصل (اختيارية)</label>
       <input id="c-contact" name="contact" placeholder="رقم هاتف أو بريد إلكتروني (اختياري)" data-i18n-placeholder="complaintContactPlaceholder">
 
