@@ -259,7 +259,8 @@ select option:first-child {
 
  
 <section id="tracking" class="section">
-  <a href="#" class="home-return" data-go="home">🏠 الرجوع للصفحة الرئيسية</a>  <h2 class="section-title">تتبع الطلب</h2>
+  <a href="#" class="home-return" data-go="home">🏠 الرجوع للصفحة الرئيسية</a>  
+  <h2 class="section-title">تتبع الطلب</h2>
   <div class="panel">
     <p class="muted">
       دخل الرقم المرجعي ووسيلة الاتصال اللي سجلتي بها الطلب
@@ -290,6 +291,23 @@ select option:first-child {
     </form>
   </div>
 </section>
+
+<!-- نافذة نتيجة تتبع الملف -->
+<div id="trackingModal" class="tracking-modal" style="display:none;" role="dialog" aria-modal="true" aria-labelledby="trackingModalTitle">
+  <div class="tracking-modal-content">
+    <button type="button" id="closeTrackingModal" class="tracking-close" aria-label="إغلاق النافذة">&times;</button>
+
+    <div class="tracking-modal-icon">📄</div>
+    <h2 id="trackingModalTitle">نتيجة تتبع الملف</h2>
+    <p class="tracking-modal-subtitle">جماعة أزيار الرقمية</p>
+
+    <div id="trackingModalBody" class="tracking-modal-body"></div>
+
+    <button type="button" id="trackingModalOk" class="btn primary tracking-modal-ok">
+      إغلاق
+    </button>
+  </div>
+</div>
 
 <section id="about" class="section">
 <div class="panel" style="text-align: center;">
