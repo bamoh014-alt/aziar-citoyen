@@ -455,6 +455,39 @@ document.getElementById('statusCommentMessage').textContent = '';
 
 document.getElementById('closeDetailsModal').addEventListener('click', () => {
   document.getElementById('detailsModal').classList.add('hidden');
+
+  
+document.getElementById('saveStatusCommentButton').addEventListener('click', async () => {
+  const input = document.getElementById('statusCommentInput');
+  const message = document.getElementById('statusCommentMessage');
+  const comment = input.value.trim();
+
+  if (!currentRecord) {
+    message.textContent = 'تعذر تحديد الطلب.';
+    return;
+  }
+
+  const button = document.getElementById('saveStatusCommentButton');
+  button.disabled = true;
+  message.textContent = 'جاري حفظ التعليق...';
+
+  const { error } = await client
+    .from('citizen_submissions')
+    .update({ status_comment: comment || null })
+    .eq('id', currentRecord.id);
+
+  button.disabled = false;
+
+  if (error) {
+    message.textContent = 'فشل حفظ التعليق: ' + error.message;
+    console.error(error);
+    return;
+  }
+
+  currentRecord.status_comment = comment;
+  message.textContent = 'تم حفظ التعليق بنجاح.';
+});
+
 });
   document.getElementById('printDetailsButton').addEventListener('click', () => {
   const modal = document.getElementById('detailsModal');
