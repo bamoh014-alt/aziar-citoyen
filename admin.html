@@ -580,12 +580,17 @@ function statusOptions(currentStatus) {
     const chosenStatus = document.getElementById('filter').value;
 
     const filtered = allRecords.filter(record => {
-      const searchable = [
-        record.reference_code,
-        record.submission_type,
-        record.category,
-        record.douar
-      ].join(' ').toLowerCase();
+     const searchable = [
+  record.reference_code,
+  typeLabel(record.submission_type),
+  record.submission_type,
+  record.category,
+  record.douar,
+  record.details,
+  record.contact,
+  STATUS_LABELS[record.status],
+  record.status
+].join(' ').toLowerCase();
 
       return searchable.includes(term) &&
         (!chosenStatus || record.status === chosenStatus);
