@@ -1286,8 +1286,11 @@ modal.style.display = 'flex';
     modalBody.replaceChildren();
 
     const message = document.createElement('p');
-    message.textContent = error.message || 'تعذر الاتصال بقاعدة البيانات.';
-    message.style.color = '#b91c1c';
+message.textContent = error.message || (
+  currentLanguage === 'fr'
+    ? 'Impossible de se connecter à la base de données.'
+    : 'تعذر الاتصال بقاعدة البيانات.'
+);    message.style.color = '#b91c1c';
     message.style.fontWeight = 'bold';
     message.style.textAlign = 'center';
 
