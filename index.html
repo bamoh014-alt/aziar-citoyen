@@ -1330,7 +1330,6 @@ if (chatForm) {
 
 document.querySelectorAll('[data-question]').forEach(button => {
   button.onclick = function () {
-    showSection('assistant');
     addBubble(this.dataset.question, 'user');
     addBubble(ask(this.dataset.question), 'bot');
   };
