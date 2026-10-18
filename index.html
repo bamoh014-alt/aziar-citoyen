@@ -743,6 +743,10 @@ addTrackingRow('نوع الطلب', types[item.submission_type] || item.submissi
 addTrackingRow('الحالة الحالية', statuses[item.status] || item.status, true);
 addTrackingRow('تاريخ التسجيل', date);
 
+if (item.status_comment && item.status_comment.trim() !== '') {
+  addTrackingRow('تعليق الإدارة', item.status_comment);
+}
+
 out.style.display = 'none';
 modal.style.display = 'flex';
  
