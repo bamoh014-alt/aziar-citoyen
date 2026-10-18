@@ -135,7 +135,105 @@ select option:first-child {
     font-family: 'Tajawal', Tahoma, Arial, sans-serif;
   }
 </style>
+/* تنسيق نافذة نتيجة تتبع الطلب */
+.tracking-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: rgba(15, 23, 42, 0.62);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+}
 
+.tracking-modal-content {
+  position: relative;
+  width: 100%;
+  max-width: 480px;
+  max-height: 90vh;
+  overflow-y: auto;
+  background: #fff;
+  border-radius: 18px;
+  padding: 26px 22px 22px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
+  text-align: center;
+  border-top: 5px solid #0f766e;
+}
+
+.tracking-close {
+  position: absolute;
+  top: 8px;
+  left: 12px;
+  border: 0;
+  background: transparent;
+  color: #64748b;
+  font-size: 30px;
+  cursor: pointer;
+}
+
+.tracking-modal-icon {
+  width: 58px;
+  height: 58px;
+  margin: 6px auto 10px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: #ecfdf5;
+  font-size: 28px;
+}
+
+.tracking-modal-content h2 {
+  margin: 0;
+  color: #115e59;
+  font-size: 24px;
+}
+
+.tracking-modal-subtitle {
+  margin: 4px 0 18px;
+  color: #64748b;
+  font-size: 13px;
+}
+
+.tracking-modal-body {
+  text-align: right;
+  line-height: 1.9;
+}
+
+.tracking-modal-row {
+  padding: 10px 12px;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  margin: 8px 0;
+  overflow-wrap: anywhere;
+}
+
+.tracking-modal-row strong {
+  display: block;
+  color: #64748b;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.tracking-modal-row span {
+  display: block;
+  color: #17202a;
+  font-weight: 700;
+}
+
+.tracking-status {
+  display: inline-block !important;
+  width: fit-content;
+  padding: 4px 12px;
+  border-radius: 20px;
+  background: #ecfdf5;
+  color: #065f46 !important;
+}
+
+.tracking-modal-ok {
+  width: 100%;
+  margin-top: 12px;
+}
   </style>
 </head>
 <body>
