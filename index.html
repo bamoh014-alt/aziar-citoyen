@@ -333,6 +333,7 @@ select option:first-child {
 
 
   </style>
+  <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 </head>
 <body>
 <header class="top">
@@ -447,6 +448,11 @@ select option:first-child {
       <input id="c-contact" name="contact" placeholder="رقم هاتف أو بريد إلكتروني (اختياري)" data-i18n-placeholder="complaintContactPlaceholder">
 
       <p class="help" data-i18n="complaintPrivacy">ما تكتبش معلومات حساسة أو معلومات شخصية ديال أشخاص آخرين.</p>
+
+<div class="cf-turnstile"
+     data-sitekey="0x4AAAAAAFbmnWnS7MIsYzqC"
+     data-theme="auto">
+</div>
 
       <button class="btn primary" type="submit" data-i18n="complaintSubmit">تسجيل الشكاية التجريبية</button>
       <div class="success" role="status"></div>
