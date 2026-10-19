@@ -1131,17 +1131,26 @@ if (type === 'complaint')
   }
 
  const reference = photoResult.reference;
-
-out.textContent = reference
-  ? `تم تسجيل الشكاية بنجاح. الرقم المرجعي ديالك هو: ${reference}` +
+const message = reference
+  ? 'تم تسجيل الشكاية بنجاح. الرقم المرجعي ديالك هو: ' + reference +
     (photoResult.photoUploaded === false
-      ? ` — تنبيه: ${photoResult.photoMessage || 'الصورة ما ترفعاتش.'}`
+      ? ' — تنبيه: ' + (photoResult.photoMessage || 'الصورة ما ترفعاتش.')
       : photoResult.photoUploaded === true
         ? ' — وتم إرفاق الصورة بنجاح.'
         : '')
-  : 'تسجلات الشكاية، ولكن تعذر عرض الرقم المرجعي. تواصل مع الإدارة.';
+  : 'تسجلات الشكاية، ولكن ما توصلناش بالرقم المرجعي.';
 
-out.style.display = 'block';
+const successBox = document.getElementById('complaintSuccess');
+
+if (successBox) {
+  successBox.textContent = message;
+  successBox.style.setProperty('display', 'block', 'important');
+  successBox.style.setProperty('visibility', 'visible', 'important');
+  successBox.style.setProperty('opacity', '1', 'important');
+  successBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
+} else {
+  alert(message);
+}
 
   form.reset();
   document.getElementById('c-photo-remove')?.click();
