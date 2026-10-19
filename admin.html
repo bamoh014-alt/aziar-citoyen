@@ -433,7 +433,8 @@ function resetInactivityTimer() {
 
 let currentRecord = null;
 
-function showRecordDetails(record) {
+
+async function showRecordDetails(record) {
   currentRecord = record;
 
   document.getElementById('detailReference').textContent =
@@ -465,7 +466,35 @@ function showRecordDetails(record) {
 
   document.getElementById('statusCommentMessage').textContent = '';
 
+  const photoContainer =
+    document.getElementById('detailPhotoContainer');
+  const photoImage =
+    document.getElementById('detailPhoto');
+  const photoLink =
+    document.getElementById('detailPhotoLink');
+
+  photoImage.removeAttribute('src');
+  photoLink.href = '#';
+  photoContainer.style.display = 'none';
+
+  // إظهار نافذة التفاصيل مباشرة
   document.getElementById('detailsModal').classList.remove('hidden');
+
+  // جلب الصورة للشكايات اللي فيها صورة مرفقة
+  if (record.photo_path && record.submission_type === 'complaint') {
+    const { data: photoData, error: photoError } =
+      await client.storage
+        .from('complaint-photos')
+        .createSignedUrl(record.photo_path, 300);
+
+    if (!photoError && photoData?.signedUrl) {
+      photoImage.src = photoData.signedUrl;
+      photoLink.href = photoData.signedUrl;
+      photoContainer.style.display = 'block';
+    } else {
+      console.error('Photo signed URL error:', photoError);
+    }
+  }
 }
 
 document.getElementById('closeDetailsModal').addEventListener('click', () => {
