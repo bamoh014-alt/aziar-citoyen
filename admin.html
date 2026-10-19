@@ -481,21 +481,31 @@ async function showRecordDetails(record) {
   document.getElementById('detailsModal').classList.remove('hidden');
 
   // جلب الصورة للشكايات اللي فيها صورة مرفقة
-if (record.photo_path && ['complaint', 'compliant'].includes(record.submission_type)) {
-  const { data: photoData, error: photoError } =
-      await client.storage
-        .from('complaint-photos')
-        .createSignedUrl(record.photo_path, 300);
 
-    if (!photoError && photoData?.signedUrl) {
-      photoImage.src = photoData.signedUrl;
-      photoLink.href = photoData.signedUrl;
-      photoContainer.style.display = 'block';
-    } else {
-      console.error('Photo signed URL error:', photoError);
-    }
+if (
+  record.photo_path &&
+  ['complaint', 'compliant'].includes(record.submission_type)
+) {
+  const photoPath = record.photo_path.trim();
+
+  const { data: photoData, error: photoError } =
+    await client.storage
+      .from('complaint-photos')
+      .createSignedUrl(photoPath, 300);
+
+  if (photoError) {
+    console.error('Photo signed URL error:', {
+      message: photoError.message,
+      photoPath: photoPath,
+      submissionType: record.submission_type
+    });
+  } else if (photoData?.signedUrl) {
+    photoImage.src = photoData.signedUrl;
+    photoLink.href = photoData.signedUrl;
+    photoContainer.style.display = 'block';
   }
 }
+
 
 document.getElementById('closeDetailsModal').addEventListener('click', () => {
   document.getElementById('detailsModal').classList.add('hidden');
