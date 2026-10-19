@@ -1129,7 +1129,7 @@ if (type === 'complaint')
       photoResult?.error || 'تعذر إرسال الشكاية. حاول مرة أخرى.'
     );
   }
-
+alert('اختبار: وصلنا لمرحلة عرض الرقم المرجعي. الرقم هو: ' + (photoResult.reference || 'غير موجود'));
  const reference = photoResult.reference;
 const message = reference
   ? 'تم تسجيل الشكاية بنجاح. الرقم المرجعي ديالك هو: ' + reference +
