@@ -574,9 +574,11 @@ document.getElementById('deleteRecordButton').addEventListener('click', async ()
   const reference = currentRecord.reference_code || currentRecord.id;
 
   const confirmed = confirm(
-    console.log('DELETE HANDLER STARTED');
-    `واش متأكد أنك باغي تمسح الطلب رقم ${reference} نهائياً؟\n\nهاد العملية ما يمكنش التراجع عليها.`
-  );
+   console.log('DELETE HANDLER STARTED');
+
+const confirmed = confirm(
+  `واش متأكد أنك باغي تمسح الطلب رقم ${reference} نهائياً؟\n\nهاد العملية ما يمكنش التراجع عليها.`
+);
 
   if (!confirmed) return;
 
