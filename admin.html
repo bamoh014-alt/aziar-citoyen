@@ -562,6 +562,7 @@ document.getElementById('saveStatusCommentButton').addEventListener('click', asy
   const modal = document.getElementById('detailsModal');
   const printWindow = window.open('', '_blank');
 
+
 document.getElementById('deleteRecordButton').addEventListener('click', async () => {
   const button = document.getElementById('deleteRecordButton');
   const message = document.getElementById('deleteRecordMessage');
@@ -574,11 +575,8 @@ document.getElementById('deleteRecordButton').addEventListener('click', async ()
   const reference = currentRecord.reference_code || currentRecord.id;
 
   const confirmed = confirm(
-   console.log('DELETE HANDLER STARTED');
-
-const confirmed = confirm(
-  `واش متأكد أنك باغي تمسح الطلب رقم ${reference} نهائياً؟\n\nهاد العملية ما يمكنش التراجع عليها.`
-);
+    `واش متأكد أنك باغي تمسح الطلب رقم ${reference} نهائياً؟\n\nهاد العملية ما يمكنش التراجع عليها.`
+  );
 
   if (!confirmed) return;
 
@@ -593,8 +591,7 @@ const confirmed = confirm(
 
     if (error) {
       console.error('Delete request error:', error);
-      message.textContent =
-        'فشل الحذف: ' + error.message;
+      message.textContent = 'فشل الحذف: ' + error.message;
       return;
     }
 
@@ -606,11 +603,7 @@ const confirmed = confirm(
     document.getElementById('detailsModal').classList.add('hidden');
 
     renderRecords();
-
-    showMessage(
-      dashboardMessage,
-      'تم حذف الطلب بنجاح.'
-    );
+    showMessage(dashboardMessage, 'تم حذف الطلب بنجاح.');
   } catch (error) {
     console.error(error);
     message.textContent = 'وقع خطأ أثناء الحذف. حاول مرة أخرى.';
@@ -618,6 +611,7 @@ const confirmed = confirm(
     button.disabled = false;
   }
 });
+
 
   if (!printWindow) {
     alert('المرجو السماح بفتح النوافذ المنبثقة للطباعة.');
