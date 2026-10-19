@@ -1129,20 +1129,18 @@ if (type === 'complaint')
     );
   }
 
-  if (photoResult.photoUploaded === false) {
-    out.textContent =
-      'تسجلات الشكاية بنجاح. الرقم المرجعي: ' +
-      photoResult.reference +
-      ' — تنبيه: ' +
-      (photoResult.photoMessage || 'الصورة ما ترفعاتش.');
-  } else {
-    out.textContent =
-      'تم إرسال الشكاية بنجاح. الرقم المرجعي: ' +
-      photoResult.reference +
-      (photoResult.photoUploaded === true
+ const reference = photoResult.reference;
+
+out.textContent = reference
+  ? `تم تسجيل الشكاية بنجاح. الرقم المرجعي ديالك هو: ${reference}` +
+    (photoResult.photoUploaded === false
+      ? ` — تنبيه: ${photoResult.photoMessage || 'الصورة ما ترفعاتش.'}`
+      : photoResult.photoUploaded === true
         ? ' — وتم إرفاق الصورة بنجاح.'
-        : '');
-  }
+        : '')
+  : 'تسجلات الشكاية، ولكن تعذر عرض الرقم المرجعي. تواصل مع الإدارة.';
+
+out.style.display = 'block';
 
   form.reset();
   document.getElementById('c-photo-remove')?.click();
