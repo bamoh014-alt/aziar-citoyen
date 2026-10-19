@@ -1106,10 +1106,9 @@ if (type === 'complaint') {
     `${SUPABASE_URL}/functions/v1/upload-complaint-photo`,
     {
       method: 'POST',
-      headers: {
-        'apikey': SUPABASE_KEY,
-        'Authorization': `Bearer ${SUPABASE_KEY}`
-      },
+     headers: {
+  'apikey': SUPABASE_KEY
+},
       body: photoForm
     }
   );
