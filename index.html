@@ -1139,15 +1139,14 @@ const message = reference
         : '')
   : 'تسجلات الشكاية، ولكن ما توصلناش بالرقم المرجعي.';
 
-const successBox = document.getElementById('complaintSuccess');
+const successBox = form.querySelector('.success');
+
 if (successBox) {
   successBox.textContent = message;
   successBox.style.setProperty('display', 'block', 'important');
   successBox.style.setProperty('visibility', 'visible', 'important');
   successBox.style.setProperty('opacity', '1', 'important');
   successBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
-} else {
-  alert(message);
 }
 
   form.reset();
