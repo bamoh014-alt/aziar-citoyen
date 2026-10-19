@@ -920,7 +920,7 @@ link.download = `aziar-requests-${dateStamp}.xls`;
 
     const { data, error } = await client
       .from('citizen_submissions')
-.select('id, reference_code, submission_type, category, douar, details, contact, status, status_comment, created_at')
+.select('id, reference_code, submission_type, category, douar, details, contact, status, status_comment, created_at, photo_path')
       .order('created_at', { ascending: false });
 
     if (error) {
