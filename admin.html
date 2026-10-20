@@ -613,6 +613,11 @@ if (dashboardMessage) {
 document.getElementById('cancelDeleteButton').addEventListener('click', () => {
   document.getElementById('deleteConfirmModal').style.display = 'none';
 });
+  document.getElementById('deleteConfirmModal').addEventListener('click', (event) => {
+  if (event.target.id === 'deleteConfirmModal') {
+    document.getElementById('deleteConfirmModal').style.display = 'none';
+  }
+});
 
 document.getElementById('confirmDeleteButton').addEventListener('click', async () => {
   const button = document.getElementById('confirmDeleteButton');
