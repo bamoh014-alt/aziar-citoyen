@@ -568,16 +568,13 @@ document.getElementById('deleteRecordButton').addEventListener('click', async ()
     return;
   }
 
-  const reference = currentRecord.reference_code || currentRecord.id;
+ const reference = currentRecord.reference_code || currentRecord.id;
 
-  const confirmed = confirm(
-    `واش متأكد أنك باغي تمسح الطلب رقم ${reference} نهائياً؟\n\nهاد العملية ما يمكنش التراجع عليها.`
-  );
+document.getElementById('deleteConfirmReference').textContent =
+  'رقم الطلب: ' + reference;
 
-  if (!confirmed) return;
-
-  button.disabled = true;
-  message.textContent = 'جاري حذف الطلب...';
+document.getElementById('deleteConfirmModal').style.display = 'flex';
+return;
 
   try {
     const { error } = await client
