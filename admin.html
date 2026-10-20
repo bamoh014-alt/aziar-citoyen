@@ -346,7 +346,60 @@
 
   </section>
 </main>
+ <div id="deleteConfirmModal" class="hidden" role="dialog"
+     aria-modal="true" aria-labelledby="deleteConfirmTitle"
+     style="position:fixed;inset:0;z-index:9999;
+     background:rgba(15,23,42,.55);backdrop-filter:blur(4px);
+     align-items:center;justify-content:center;padding:20px;">
 
+  <div style="background:#fff;width:100%;max-width:420px;
+       border-radius:20px;padding:28px 24px;text-align:center;
+       box-shadow:0 20px 60px rgba(0,0,0,.2);">
+
+    <div style="width:68px;height:68px;margin:0 auto 18px;
+         border-radius:50%;background:#fef2f2;color:#dc2626;
+         display:flex;align-items:center;justify-content:center;
+         font-size:30px;">
+      🗑️
+    </div>
+
+    <h2 id="deleteConfirmTitle"
+        style="margin:0 0 12px;color:#1f2937;font-size:22px;">
+      تأكيد حذف الطلب
+    </h2>
+
+    <p style="color:#64748b;line-height:1.9;margin:0 0 10px;">
+      واش متأكد أنك باغي تحذف هاد الطلب نهائياً؟
+    </p>
+
+    <p style="color:#dc2626;font-size:13px;line-height:1.8;
+       background:#fef2f2;border-radius:10px;padding:10px;margin:0 0 18px;">
+      ⚠️ تنبيه: هاد العملية نهائية وما يمكنش التراجع عليها.
+    </p>
+
+    <p id="deleteConfirmReference"
+       style="font-weight:700;color:#334155;margin:0 0 22px;
+       overflow-wrap:anywhere;"></p>
+
+    <div style="display:flex;gap:10px;">
+      <button id="cancelDeleteButton" type="button"
+        style="flex:1;border:1px solid #e2e8f0;background:#f8fafc;
+        color:#334155;padding:12px 8px;border-radius:10px;
+        font-family:inherit;font-size:14px;font-weight:700;cursor:pointer;">
+        إلغاء
+      </button>
+
+      <button id="confirmDeleteButton" type="button"
+        style="flex:1;border:none;background:#dc2626;color:#fff;
+        padding:12px 8px;border-radius:10px;font-family:inherit;
+        font-size:14px;font-weight:700;cursor:pointer;">
+        نعم، حذف الطلب
+      </button>
+    </div>
+
+  </div>
+</div>
+  
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
   // عوّض هاد الجوج بالقيم ديال مشروعك
@@ -1193,61 +1246,6 @@ document.addEventListener('DOMContentLoaded', () => {
   start();
 });
   </script>
-
-  <div id="deleteConfirmModal" class="hidden" role="dialog"
-     aria-modal="true" aria-labelledby="deleteConfirmTitle"
-     style="position:fixed;inset:0;z-index:9999;
-     background:rgba(15,23,42,.55);backdrop-filter:blur(4px);
-     align-items:center;justify-content:center;padding:20px;">
-
-  <div style="background:#fff;width:100%;max-width:420px;
-       border-radius:20px;padding:28px 24px;text-align:center;
-       box-shadow:0 20px 60px rgba(0,0,0,.2);">
-
-    <div style="width:68px;height:68px;margin:0 auto 18px;
-         border-radius:50%;background:#fef2f2;color:#dc2626;
-         display:flex;align-items:center;justify-content:center;
-         font-size:30px;">
-      🗑️
-    </div>
-
-    <h2 id="deleteConfirmTitle"
-        style="margin:0 0 12px;color:#1f2937;font-size:22px;">
-      تأكيد حذف الطلب
-    </h2>
-
-    <p style="color:#64748b;line-height:1.9;margin:0 0 10px;">
-      واش متأكد أنك باغي تحذف هاد الطلب نهائياً؟
-    </p>
-
-    <p style="color:#dc2626;font-size:13px;line-height:1.8;
-       background:#fef2f2;border-radius:10px;padding:10px;margin:0 0 18px;">
-      ⚠️ تنبيه: هاد العملية نهائية وما يمكنش التراجع عليها.
-    </p>
-
-    <p id="deleteConfirmReference"
-       style="font-weight:700;color:#334155;margin:0 0 22px;
-       overflow-wrap:anywhere;"></p>
-
-    <div style="display:flex;gap:10px;">
-      <button id="cancelDeleteButton" type="button"
-        style="flex:1;border:1px solid #e2e8f0;background:#f8fafc;
-        color:#334155;padding:12px 8px;border-radius:10px;
-        font-family:inherit;font-size:14px;font-weight:700;cursor:pointer;">
-        إلغاء
-      </button>
-
-      <button id="confirmDeleteButton" type="button"
-        style="flex:1;border:none;background:#dc2626;color:#fff;
-        padding:12px 8px;border-radius:10px;font-family:inherit;
-        font-size:14px;font-weight:700;cursor:pointer;">
-        نعم، حذف الطلب
-      </button>
-    </div>
-
-  </div>
-</div>
-  
 
 
 </body>
