@@ -610,6 +610,60 @@ if (dashboardMessage) {
   }
 });
 
+document.getElementById('cancelDeleteButton').addEventListener('click', () => {
+  document.getElementById('deleteConfirmModal').style.display = 'none';
+});
+
+document.getElementById('confirmDeleteButton').addEventListener('click', async () => {
+  const button = document.getElementById('confirmDeleteButton');
+  const message = document.getElementById('deleteRecordMessage');
+
+  if (!currentRecord) {
+    document.getElementById('deleteConfirmModal').style.display = 'none';
+    return;
+  }
+
+  const recordId = currentRecord.id;
+
+  button.disabled = true;
+  button.textContent = 'جاري الحذف...';
+  message.textContent = 'جاري حذف الطلب...';
+
+  try {
+    const { error } = await client
+      .from('citizen_submissions')
+      .delete()
+      .eq('id', recordId);
+
+    if (error) {
+      console.error('Delete error:', error);
+      message.textContent = 'فشل الحذف: ' + error.message;
+      return;
+    }
+
+    allRecords = allRecords.filter(record => record.id !== recordId);
+    currentRecord = null;
+
+    document.getElementById('detailsModal').classList.add('hidden');
+    document.getElementById('deleteConfirmModal').style.display = 'none';
+
+    renderRecords();
+
+    if (dashboardMessage) {
+      showMessage(dashboardMessage, 'تم حذف الطلب بنجاح.');
+    } else {
+      alert('تم حذف الطلب بنجاح.');
+    }
+
+  } catch (error) {
+    console.error('Delete error:', error);
+    message.textContent = 'وقع خطأ أثناء حذف الطلب.';
+  } finally {
+    button.disabled = false;
+    button.textContent = 'نعم، حذف الطلب';
+  }
+});
+
   
   document.getElementById('printDetailsButton').addEventListener('click', () => {
   const modal = document.getElementById('detailsModal');
