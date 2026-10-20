@@ -558,13 +558,8 @@ document.getElementById('saveStatusCommentButton').addEventListener('click', asy
   }
 });
 
-  document.getElementById('printDetailsButton').addEventListener('click', () => {
-  const modal = document.getElementById('detailsModal');
-  const printWindow = window.open('', '_blank');
-
 
 document.getElementById('deleteRecordButton').addEventListener('click', async () => {
-  alert('كود الحذف الأصلي خدام');
   const button = document.getElementById('deleteRecordButton');
   const message = document.getElementById('deleteRecordMessage');
 
@@ -612,6 +607,11 @@ document.getElementById('deleteRecordButton').addEventListener('click', async ()
     button.disabled = false;
   }
 });
+
+  
+  document.getElementById('printDetailsButton').addEventListener('click', () => {
+  const modal = document.getElementById('detailsModal');
+  const printWindow = window.open('', '_blank');
 
 
   if (!printWindow) {
