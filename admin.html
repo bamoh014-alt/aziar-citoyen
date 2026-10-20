@@ -629,7 +629,10 @@ document.getElementById('deleteRecordButton').addEventListener('click', () => {
   document.getElementById('deleteConfirmReference').textContent =
     'رقم الطلب: ' + reference;
 document.getElementById('deleteConfirmMessage').textContent = '';
-  document.getElementById('deleteConfirmModal').style.display = 'flex';
+
+const confirmModal = document.getElementById('deleteConfirmModal');
+confirmModal.classList.remove('hidden');
+confirmModal.style.display = 'flex';
 });
 
 document.getElementById('cancelDeleteButton').addEventListener('click', () => {
