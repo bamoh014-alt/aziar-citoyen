@@ -559,55 +559,20 @@ document.getElementById('saveStatusCommentButton').addEventListener('click', asy
 });
 
 
-document.getElementById('deleteRecordButton').addEventListener('click', async () => {
-  const button = document.getElementById('deleteRecordButton');
-  const message = document.getElementById('deleteRecordMessage');
 
+document.getElementById('deleteRecordButton').addEventListener('click', () => {
   if (!currentRecord) {
-    message.textContent = 'تعذر تحديد الطلب المراد حذفه.';
+    document.getElementById('deleteRecordMessage').textContent =
+      'تعذر تحديد الطلب المراد حذفه.';
     return;
   }
 
- const reference = currentRecord.reference_code || currentRecord.id;
+  const reference = currentRecord.reference_code || currentRecord.id;
 
-document.getElementById('deleteConfirmReference').textContent =
-  'رقم الطلب: ' + reference;
+  document.getElementById('deleteConfirmReference').textContent =
+    'رقم الطلب: ' + reference;
 
-document.getElementById('deleteConfirmModal').style.display = 'flex';
-return;
-
-  try {
-    const { error } = await client
-      .from('citizen_submissions')
-      .delete()
-      .eq('id', currentRecord.id);
-
-    if (error) {
-      console.error('Delete request error:', error);
-      message.textContent = 'فشل الحذف: ' + error.message;
-      return;
-    }
-
-    allRecords = allRecords.filter(
-      record => record.id !== currentRecord.id
-    );
-
-  currentRecord = null;
-document.getElementById('detailsModal').classList.add('hidden');
-
-renderRecords();
-
-if (dashboardMessage) {
-  showMessage(dashboardMessage, 'تم حذف الطلب بنجاح.');
-} else {
-  alert('تم حذف الطلب بنجاح.');
-}
-  } catch (error) {
-    console.error(error);
-    message.textContent = 'وقع خطأ أثناء الحذف. حاول مرة أخرى.';
-  } finally {
-    button.disabled = false;
-  }
+  document.getElementById('deleteConfirmModal').style.display = 'flex';
 });
 
 document.getElementById('cancelDeleteButton').addEventListener('click', () => {
