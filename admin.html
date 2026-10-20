@@ -643,8 +643,7 @@ document.getElementById('cancelDeleteButton').addEventListener('click', () => {
 
 document.getElementById('confirmDeleteButton').addEventListener('click', async () => {
   const button = document.getElementById('confirmDeleteButton');
-  const message = document.getElementById('deleteRecordMessage');
-
+const message = document.getElementById('deleteConfirmMessage');
   if (!currentRecord) {
     document.getElementById('deleteConfirmModal').style.display = 'none';
     return;
