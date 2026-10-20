@@ -595,11 +595,16 @@ document.getElementById('deleteRecordButton').addEventListener('click', async ()
       record => record.id !== currentRecord.id
     );
 
-    currentRecord = null;
-    document.getElementById('detailsModal').classList.add('hidden');
+  currentRecord = null;
+document.getElementById('detailsModal').classList.add('hidden');
 
-    renderRecords();
-    showMessage(dashboardMessage, 'تم حذف الطلب بنجاح.');
+renderRecords();
+
+if (dashboardMessage) {
+  showMessage(dashboardMessage, 'تم حذف الطلب بنجاح.');
+} else {
+  alert('تم حذف الطلب بنجاح.');
+}
   } catch (error) {
     console.error(error);
     message.textContent = 'وقع خطأ أثناء الحذف. حاول مرة أخرى.';
